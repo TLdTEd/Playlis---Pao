@@ -4,349 +4,406 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestra Playlist de Snoopy ✨</title>
+    <!-- Fuentes divertidas y de estilo manuscrito de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
         :root {
-            --snoopy-yellow: #FCD116;
-            --snoopy-red: #E2231A;
-            --snoopy-white: #FFFFFF;
-            --snoopy-black: #000000;
-            --snoopy-bg: #F4F1EA;
+            --yellow-woodstock: #FCD116;
+            --red-cabin: #E52521;
+            --black-comic: #1A1A1A;
+            --white-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--snoopy-bg);
-            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif;
-            color: var(--snoopy-black);
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--yellow-woodstock);
+            background-image: radial-gradient(var(--black-comic) 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: var(--black-comic);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            justify-content: flex-start;
+            padding: 20px;
         }
 
-        header {
-            text-align: center;
-            margin: 30px 10px 10px 10px;
-            padding: 15px;
-            background-color: var(--snoopy-yellow);
-            border: 4px solid var(--snoopy-black);
-            box-shadow: 8px 8px 0px var(--snoopy-black);
-            border-radius: 12px;
-            max-width: 600px;
-            width: 90%;
+        /* Línea ondulada icónica de Charlie Brown en los extremos superiores/inferiores */
+        .header-decor {
+            width: 100%;
+            max-width: 800px;
+            height: 20px;
+            background: repeat-x url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V60c120,0,180-40,300-40s180,40,300,40,180-40,300-40,180,40,300,40V0Z" fill="%231A1A1A"/></svg>');
+            background-size: 100px 20px;
+            margin-bottom: 20px;
+            transform: rotate(180deg);
         }
 
         h1 {
-            margin: 0;
-            font-size: 28px;
+            font-size: 2.5rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            text-align: center;
+            background-color: var(--red-cabin);
+            color: white;
+            padding: 10px 20px;
+            border: 4px solid var(--black-comic);
+            border-radius: 12px;
+            box-shadow: 6px 6px 0px var(--black-comic);
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            transform: rotate(-1deg);
         }
 
-        p.subtitle {
-            margin: 5px 0 0 0;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-            width: 90%;
-            max-width: 800px;
-            margin: 20px 0 50px 0;
-        }
-
-        /* Comic Panel Layout */
-        .comic-panel {
-            background-color: var(--snoopy-white);
-            border: 4px solid var(--snoopy-black);
-            box-shadow: 10px 10px 0px var(--snoopy-black);
-            border-radius: 16px;
+        .comic-container {
             width: 100%;
-            overflow: hidden;
+            max-width: 800px;
+            background-color: var(--white-bg);
+            border: 5px solid var(--black-comic);
+            border-radius: 16px;
+            box-shadow: 10px 10px 0px var(--black-comic);
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
         }
 
-        @media (min-width: 650px) {
-            .comic-panel {
-                grid-template-columns: 1fr 1fr;
+        @media (max-width: 650px) {
+            .comic-container {
+                grid-template-columns: 1fr;
             }
         }
 
-        .photo-side {
-            padding: 20px;
+        /* Bloque de foto estilo Polaroid */
+        .photo-panel {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: var(--snoopy-white);
-            border-bottom: 4px solid var(--snoopy-black);
-        }
-
-        @media (min-width: 650px) {
-            .photo-side {
-                border-bottom: none;
-                border-right: 4px solid var(--snoopy-black);
-            }
-        }
-
-        .polaroid {
-            background: white;
-            padding: 15px 15px 35px 15px;
-            border: 3px solid var(--snoopy-black);
-            box-shadow: 5px 5px 0px rgba(0,0,0,0.15);
+            background-color: #fcfcfc;
+            border: 4px solid var(--black-comic);
+            padding: 15px 15px 30px 15px;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.15);
             transform: rotate(-2deg);
             transition: transform 0.3s ease;
-            width: 80%;
-            max-width: 250px;
         }
 
-        .polaroid:hover {
-            transform: rotate(2deg) scale(1.05);
+        .photo-panel:hover {
+            transform: rotate(1deg) scale(1.02);
         }
 
-        .polaroid img {
+        .photo-frame {
             width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border: 3px solid var(--snoopy-black);
-        }
-
-        .interactive-side {
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background-color: var(--snoopy-white);
-        }
-
-        /* Speech Bubble Style */
-        .speech-bubble {
-            position: relative;
-            background: var(--snoopy-yellow);
-            border: 4px solid var(--snoopy-black);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
-            min-height: 80px;
+            aspect-ratio: 1 / 1;
+            background-color: #eee;
+            border: 3px solid var(--black-comic);
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .track-title-display {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
             text-align: center;
+            color: var(--black-comic);
+            word-break: break-word;
+        }
+
+        /* Bloque del Bocadillo de Texto (Comic Speech Bubble) */
+        .lyrics-panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .speech-bubble {
+            position: relative;
+            background: #FFFFFF;
+            border: 4px solid var(--black-comic);
+            border-radius: 30px;
+            padding: 30px;
+            width: 100%;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        }
+
+        /* Cola del bocadillo apuntando hacia la izquierda (o arriba en móvil) */
+        .speech-bubble:after, .speech-bubble:before {
+            right: 100%;
+            top: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
         }
 
         .speech-bubble:after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 40px;
-            border-width: 15px 15px 0;
-            border-style: solid;
-            border-color: var(--snoopy-yellow) transparent;
-            display: block;
-            width: 0;
+            border-color: rgba(255, 255, 255, 0);
+            border-right-color: #FFFFFF;
+            border-width: 15px;
+            margin-top: -15px;
+        }
+        .speech-bubble:before {
+            border-color: rgba(26, 26, 26, 0);
+            border-right-color: var(--black-comic);
+            border-width: 21px;
+            margin-top: -21px;
         }
 
-        .speech-bubble:before {
-            content: '';
-            position: absolute;
-            bottom: -21px;
-            left: 38px;
-            border-width: 17px 17px 0;
-            border-style: solid;
-            border-color: var(--snoopy-black) transparent;
-            display: block;
-            width: 0;
+        @media (max-width: 650px) {
+            .speech-bubble:after, .speech-bubble:before {
+                right: auto;
+                top: -30px;
+                left: 50%;
+            }
+            .speech-bubble:after {
+                border-right-color: transparent;
+                border-bottom-color: #FFFFFF;
+                margin-left: -15px;
+                margin-top: 0;
+            }
+            .speech-bubble:before {
+                border-right-color: transparent;
+                border-bottom-color: var(--black-comic);
+                margin-left: -21px;
+                margin-top: -6px;
+            }
         }
 
         .lyrics-text {
-            font-size: 18px;
-            font-weight: bold;
-            font-style: italic;
-            margin: 0;
-            line-height: 1.4;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.6rem;
+            line-height: 1.3;
+            text-align: center;
+            color: #222;
         }
 
-        /* Music Controls & Selector */
-        .controls-box {
+        /* Controles de Navegación */
+        .controls-section {
+            width: 100%;
+            max-width: 800px;
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 15px;
+            margin-bottom: 25px;
         }
 
-        .song-selector {
-            width: 100%;
-            padding: 12px;
-            font-family: inherit;
-            font-size: 16px;
-            font-weight: bold;
-            border: 3px solid var(--snoopy-black);
-            border-radius: 8px;
-            background-color: var(--snoopy-white);
-            cursor: pointer;
-            outline: none;
-        }
-
-        .song-selector:focus {
-            background-color: #fffde7;
-        }
-
-        .navigation-buttons {
+        .nav-buttons {
             display: flex;
-            justify-content: space-between;
-            gap: 10px;
+            gap: 15px;
+            width: 100%;
+            justify-content: center;
         }
 
-        .nav-btn {
-            flex: 1;
-            padding: 10px;
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            background-color: var(--snoopy-red);
-            color: var(--snoopy-white);
-            border: 3px solid var(--snoopy-black);
-            border-radius: 8px;
+        .btn {
+            background-color: var(--white-bg);
+            border: 3px solid var(--black-comic);
+            border-radius: 10px;
+            padding: 10px 25px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
             cursor: pointer;
-            box-shadow: 4px 4px 0px var(--snoopy-black);
+            box-shadow: 4px 4px 0px var(--black-comic);
             transition: all 0.1s ease;
+            user-select: none;
         }
 
-        .nav-btn:active {
+        .btn:active {
             transform: translate(3px, 3px);
-            box-shadow: 1px 1px 0px var(--snoopy-black);
+            box-shadow: 1px 1px 0px var(--black-comic);
         }
 
-        /* Spotify Widget */
+        .btn-next {
+            background-color: var(--red-cabin);
+            color: white;
+        }
+
+        .select-custom {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+            border: 3px solid var(--black-comic);
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 4px 4px 0px var(--black-comic);
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Contenedor del reproductor de Spotify */
         .spotify-container {
             width: 100%;
-            background-color: var(--snoopy-white);
-            border: 4px solid var(--snoopy-black);
-            box-shadow: 8px 8px 0px var(--snoopy-black);
+            max-width: 800px;
+            background-color: var(--black-comic);
+            padding: 12px;
             border-radius: 16px;
-            overflow: hidden;
-            height: 160px;
+            border: 4px solid var(--black-comic);
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .spotify-container iframe {
+            display: block;
+            border-radius: 12px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Nuestra Playlist 🐾</h1>
-        <p class="subtitle">Historias y canciones contigo al estilo Peanuts</p>
-    </header>
+    <div class="header-decor"></div>
 
-    <div class="main-container">
+    <h1>Nuestra Playlist 🐾</h1>
+
+    <!-- Tablero de Cómic Interactivo -->
+    <div class="comic-container">
+        <!-- Izquierda: Foto Polarid -->
+        <div class="photo-panel">
+            <div class="photo-frame">
+                <img id="track-photo" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=600&auto=format&fit=crop" alt="Foto de momento especial">
+            </div>
+            <div class="track-title-display" id="track-title">Cargando...</div>
+        </div>
+
+        <!-- Derecha: Letra en bocadillo de diálogo -->
+        <div class="lyrics-panel">
+            <div class="speech-bubble">
+                <p class="lyrics-text" id="track-lyrics">«¡Elige una canción para ver el fragmento dedicado!»</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de controles de navegación -->
+    <div class="controls-section">
+        <div class="nav-buttons">
+            <button class="btn" id="btn-prev">⬅ Anterior</button>
+            <button class="btn btn-next" id="btn-next">Siguiente ➡</button>
+        </div>
         
-        <!-- PANEL INTERACTIVO ESTILO CÓMIC -->
-        <div class="comic-panel">
-            
-            <!-- Lado de la Foto (Polaroid) -->
-            <div class="photo-side">
-                <div class="polaroid">
-                    <!-- Reemplaza estas imágenes con tus fotos reales -->
-                    <img id="track-photo" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500" alt="Foto de nuestro momento">
-                </div>
-            </div>
+        <select class="select-custom" id="track-select">
+            <!-- Las opciones se generarán dinámicamente con JavaScript -->
+        </select>
+    </div>
 
-            <!-- Lado de las Letras y Controles -->
-            <div class="interactive-side">
-                
-                <!-- Bocadillo de texto de Snoopy / Letra -->
-                <div class="speech-bubble">
-                    <p class="lyrics-text" id="track-lyrics">"Selecciona una canción abajo para ver nuestro fragmento especial..."</p>
-                </div>
-
-                <!-- Selectores y botones -->
-                <div class="controls-box">
-                    <select id="song-select" class="song-selector" onchange="updatePanel(this.value)">
-                        <option value="0">🎵 Canción 1: Tu Nombre - Artista</option>
-                        <option value="1">🎵 Canción 2: Tu Nombre - Artista</option>
-                        <option value="2">🎵 Canción 3: Tu Nombre - Artista</option>
-                        <option value="3">🎵 Canción 4: Tu Nombre - Artista</option>
-                    </select>
-
-                    <div class="navigation-buttons">
-                        <button class="nav-btn" onclick="navigateTrack(-1)">⏮ Anter.</button>
-                        <button class="nav-btn" onclick="navigateTrack(1)">Siguiente ⏭</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- REPRODUCTOR OFICIAL DE SPOTIFY -->
-        <div class="spotify-container">
-            <!-- REEMPLAZA EL LINK DE ABAJO CON TU ENLACE DE INSERCIÓN DE PLAYLIST (EMBED) -->
-            <iframe data-testid="embed-iframe" style="border-radius:12px" 
-                src="https://open.spotify.com/embed/playlist/5dfAJ9jPW6btHq2JGfM57Z?utm_source=generator&si=f2fe0b7df04743e9" 
-                width="100%" height="352" 
-                frameBorder="0" 
-                allowfullscreen="" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                loading="lazy">
-            </iframe>
-        </div>
-
+    <!-- Bloque Fijo del Widget de tu Playlist de Spotify -->
+    <div class="spotify-container">
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5dfAJ9jPW6btHq2JGfM57Z?utm_source=generator&si=f2fe0b7df04743e9" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 
     <script>
-        // CONFIGURA AQUÍ TUS CANCIONES, LETRAS Y FOTOS
-        // Puedes usar enlaces de tus fotos subidas a internet o nombres de archivos locales (ej: "foto1.jpg")
+        // 📋 CONFIGURA AQUÍ TUS CANCIONES, LETRAS Y FOTOS
+        // He incluido algunas de las canciones que leí en tu lista de reproducción para que veas la estructura.
+        // Puedes cambiar el texto dentro de 'lyrics' y pegar links de fotos en 'photo'.
         const playlistData = [
             {
-                lyrics: "«And I love her...» Eres la letra de todas mis canciones favoritas.",
-                photo: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500" // Foto 1
+                title: "1. Bound 2 - Kanye West",
+                lyrics: "«Uh-huh, honey... Agrega aquí el fragmento de letra que más te encante de esta canción.»",
+                photo: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600&auto=format&fit=crop"
             },
             {
-                lyrics: "«I wanna be yours...» Como Snoopy esperando fielmente sobre su casita roja.",
-                photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500" // Foto 2
+                title: "2. Sanctuary - Joji",
+                lyrics: "«If you've been waiting for falling in love, babe, you don't have to wait on me...»",
+                photo: "https://images.unsplash.com/photo-1516624683217-bf02fc6b6b7c?q=80&w=600&auto=format&fit=crop"
             },
             {
-                lyrics: "«Just the two of us...» Construyendo nuestros propios castillos en el aire.",
-                photo: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500" // Foto 3
+                title: "7. Quiereme - LATIN MAFIA, Fred again..",
+                lyrics: "«Quédate otro ratito más, que me hace bien la forma en la que me miras...»",
+                photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=600&auto=format&fit=crop"
             },
             {
-                lyrics: "«Yellow...» Mira las estrellas, mira cómo brillan por ti.",
-                photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" // Foto 4
+                title: "13. Otro Atardecer - Bad Bunny, The Marías",
+                lyrics: "«Por si no te vuelvo a ver, me pongo a recordar todo lo que me diste una tarde frente al mar...»",
+                photo: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                title: "32. YOKO - Alvaro Diaz",
+                lyrics: "«Si el mundo se acabara hoy, yo te elegiría a ti una y mil veces más...»",
+                photo: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                title: "34. Patadas de Ahogado - LATIN MAFIA, HUMBE",
+                lyrics: "«Y es que por ti yo todo lo siento, contigo no hay miedo, eres mi lugar seguro...»",
+                photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop"
             }
+            // Puedes seguir añadiendo bloques de llaves {} separados por comas para las 39 canciones.
         ];
 
         let currentIndex = 0;
 
-        function updatePanel(index) {
-            currentIndex = parseInt(index);
-            
-            // Actualizar interfaz
-            document.getElementById("track-lyrics").innerText = playlistData[currentIndex].lyrics;
-            document.getElementById("track-photo").src = playlistData[currentIndex].photo;
-            document.getElementById("song-select").value = currentIndex;
+        // Elementos del DOM
+        const trackPhoto = document.getElementById('track-photo');
+        const trackTitle = document.getElementById('track-title');
+        const trackLyrics = document.getElementById('track-lyrics');
+        const trackSelect = document.getElementById('track-select');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+
+        // Inicializar el Selector desplegable
+        function initDropdown() {
+            playlistData.forEach((track, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = track.title;
+                trackSelect.appendChild(option);
+            });
         }
 
-        function navigateTrack(direction) {
-            let newIndex = currentIndex + direction;
-            if (newIndex >= playlistData.length) newIndex = 0;
-            if (newIndex < 0) newIndex = playlistData.length - 1;
-            updatePanel(newIndex);
+        // Renderizar la canción actual
+        function updateUI(index) {
+            const currentTrack = playlistData[index];
+            trackPhoto.src = currentTrack.photo;
+            trackTitle.textContent = currentTrack.title;
+            trackLyrics.textContent = currentTrack.lyrics;
+            trackSelect.value = index;
         }
 
-        // Cargar la primera canción al iniciar
-        window.onload = function() {
-            updatePanel(0);
-        };
+        // Eventos de Navegación
+        btnPrev.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + playlistData.length) % playlistData.length;
+            updateUI(currentIndex);
+        });
+
+        btnNext.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % playlistData.length;
+            updateUI(currentIndex);
+        });
+
+        trackSelect.addEventListener('change', (e) => {
+            currentIndex = parseInt(e.target.value);
+            updateUI(currentIndex);
+        });
+
+        // Arrancar la web
+        initDropdown();
+        if(playlistData.length > 0) {
+            updateUI(0);
+        }
     </script>
 </body>
 </html>
