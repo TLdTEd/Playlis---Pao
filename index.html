@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Playlist de Snoopy ✨</title>
+    <style>
+        :root {
+            --snoopy-yellow: #FCD116;
+            --snoopy-red: #E2231A;
+            --snoopy-white: #FFFFFF;
+            --snoopy-black: #000000;
+            --snoopy-bg: #F4F1EA;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--snoopy-bg);
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif;
+            color: var(--snoopy-black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin: 30px 10px 10px 10px;
+            padding: 15px;
+            background-color: var(--snoopy-yellow);
+            border: 4px solid var(--snoopy-black);
+            box-shadow: 8px 8px 0px var(--snoopy-black);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p.subtitle {
+            margin: 5px 0 0 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 90%;
+            max-width: 800px;
+            margin: 20px 0 50px 0;
+        }
+
+        /* Comic Panel Layout */
+        .comic-panel {
+            background-color: var(--snoopy-white);
+            border: 4px solid var(--snoopy-black);
+            box-shadow: 10px 10px 0px var(--snoopy-black);
+            border-radius: 16px;
+            width: 100%;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 650px) {
+            .comic-panel {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .photo-side {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--snoopy-white);
+            border-bottom: 4px solid var(--snoopy-black);
+        }
+
+        @media (min-width: 650px) {
+            .photo-side {
+                border-bottom: none;
+                border-right: 4px solid var(--snoopy-black);
+            }
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px 15px 35px 15px;
+            border: 3px solid var(--snoopy-black);
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.15);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+            width: 80%;
+            max-width: 250px;
+        }
+
+        .polaroid:hover {
+            transform: rotate(2deg) scale(1.05);
+        }
+
+        .polaroid img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border: 3px solid var(--snoopy-black);
+        }
+
+        .interactive-side {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: var(--snoopy-white);
+        }
+
+        /* Speech Bubble Style */
+        .speech-bubble {
+            position: relative;
+            background: var(--snoopy-yellow);
+            border: 4px solid var(--snoopy-black);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 40px;
+            border-width: 15px 15px 0;
+            border-style: solid;
+            border-color: var(--snoopy-yellow) transparent;
+            display: block;
+            width: 0;
+        }
+
+        .speech-bubble:before {
+            content: '';
+            position: absolute;
+            bottom: -21px;
+            left: 38px;
+            border-width: 17px 17px 0;
+            border-style: solid;
+            border-color: var(--snoopy-black) transparent;
+            display: block;
+            width: 0;
+        }
+
+        .lyrics-text {
+            font-size: 18px;
+            font-weight: bold;
+            font-style: italic;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Music Controls & Selector */
+        .controls-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .song-selector {
+            width: 100%;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: bold;
+            border: 3px solid var(--snoopy-black);
+            border-radius: 8px;
+            background-color: var(--snoopy-white);
+            cursor: pointer;
+            outline: none;
+        }
+
+        .song-selector:focus {
+            background-color: #fffde7;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: var(--snoopy-red);
+            color: var(--snoopy-white);
+            border: 3px solid var(--snoopy-black);
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--snoopy-black);
+            transition: all 0.1s ease;
+        }
+
+        .nav-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 1px 1px 0px var(--snoopy-black);
+        }
+
+        /* Spotify Widget */
+        .spotify-container {
+            width: 100%;
+            background-color: var(--snoopy-white);
+            border: 4px solid var(--snoopy-black);
+            box-shadow: 8px 8px 0px var(--snoopy-black);
+            border-radius: 16px;
+            overflow: hidden;
+            height: 160px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Nuestra Playlist 🐾</h1>
+        <p class="subtitle">Historias y canciones contigo al estilo Peanuts</p>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- PANEL INTERACTIVO ESTILO CÓMIC -->
+        <div class="comic-panel">
+            
+            <!-- Lado de la Foto (Polaroid) -->
+            <div class="photo-side">
+                <div class="polaroid">
+                    <!-- Reemplaza estas imágenes con tus fotos reales -->
+                    <img id="track-photo" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500" alt="Foto de nuestro momento">
+                </div>
+            </div>
+
+            <!-- Lado de las Letras y Controles -->
+            <div class="interactive-side">
+                
+                <!-- Bocadillo de texto de Snoopy / Letra -->
+                <div class="speech-bubble">
+                    <p class="lyrics-text" id="track-lyrics">"Selecciona una canción abajo para ver nuestro fragmento especial..."</p>
+                </div>
+
+                <!-- Selectores y botones -->
+                <div class="controls-box">
+                    <select id="song-select" class="song-selector" onchange="updatePanel(this.value)">
+                        <option value="0">🎵 Canción 1: Tu Nombre - Artista</option>
+                        <option value="1">🎵 Canción 2: Tu Nombre - Artista</option>
+                        <option value="2">🎵 Canción 3: Tu Nombre - Artista</option>
+                        <option value="3">🎵 Canción 4: Tu Nombre - Artista</option>
+                    </select>
+
+                    <div class="navigation-buttons">
+                        <button class="nav-btn" onclick="navigateTrack(-1)">⏮ Anter.</button>
+                        <button class="nav-btn" onclick="navigateTrack(1)">Siguiente ⏭</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- REPRODUCTOR OFICIAL DE SPOTIFY -->
+        <div class="spotify-container">
+            <!-- REEMPLAZA EL LINK DE ABAJO CON TU ENLACE DE INSERCIÓN DE PLAYLIST (EMBED) -->
+            <iframe id="spotify-player" 
+                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DX10zKzsJ2jva?utm_source=generator" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+            </iframe>
+        </div>
+
+    </div>
+
+    <script>
+        // CONFIGURA AQUÍ TUS CANCIONES, LETRAS Y FOTOS
+        // Puedes usar enlaces de tus fotos subidas a internet o nombres de archivos locales (ej: "foto1.jpg")
+        const playlistData = [
+            {
+                lyrics: "«And I love her...» Eres la letra de todas mis canciones favoritas.",
+                photo: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500" // Foto 1
+            },
+            {
+                lyrics: "«I wanna be yours...» Como Snoopy esperando fielmente sobre su casita roja.",
+                photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500" // Foto 2
+            },
+            {
+                lyrics: "«Just the two of us...» Construyendo nuestros propios castillos en el aire.",
+                photo: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500" // Foto 3
+            },
+            {
+                lyrics: "«Yellow...» Mira las estrellas, mira cómo brillan por ti.",
+                photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" // Foto 4
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function updatePanel(index) {
+            currentIndex = parseInt(index);
+            
+            // Actualizar interfaz
+            document.getElementById("track-lyrics").innerText = playlistData[currentIndex].lyrics;
+            document.getElementById("track-photo").src = playlistData[currentIndex].photo;
+            document.getElementById("song-select").value = currentIndex;
+        }
+
+        function navigateTrack(direction) {
+            let newIndex = currentIndex + direction;
+            if (newIndex >= playlistData.length) newIndex = 0;
+            if (newIndex < 0) newIndex = playlistData.length - 1;
+            updatePanel(newIndex);
+        }
+
+        // Cargar la primera canción al iniciar
+        window.onload = function() {
+            updatePanel(0);
+        };
+    </script>
+</body>
+</html>
