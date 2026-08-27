@@ -6,14 +6,16 @@
     <title>22</title>
     <style>
         :root {
-            --bg-main: #121212;
-            --bg-card: #181818;
-            --accent: #1DB954;
+            --bg-main: #121212; /* Negro Spotify */
+            --bg-card: #181818; /* Gris oscuro paneles */
+            --accent: #1DB954;  /* Verde oficial */
             --text-main: #FFFFFF;
             --text-muted: #B3B3B3;
-            --shadow: 0 8px 24px rgba(0,0,0,0.5);
+            --shadow: 0 8px 24px rgba(0,0,0,0.6);
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-main);
@@ -24,6 +26,8 @@
             align-items: center;
             overflow-x: hidden;
         }
+
+        /* PANTALLA ENTRADA */
         #welcome-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -31,39 +35,52 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             z-index: 1000; transition: opacity 0.6s ease, visibility 0.6s; padding: 20px;
         }
+
         #welcome-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
         .welcome-card {
             background: var(--bg-card); padding: 40px; border-radius: 12px;
             box-shadow: var(--shadow); max-width: 400px; width: 100%; text-align: center;
         }
+
         .welcome-title { font-size: 64px; font-weight: 800; margin-bottom: 5px; }
         .welcome-subtitle { font-size: 14px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 30px; text-transform: uppercase; }
+
         .btn-open {
             background-color: var(--accent); color: #000000; border: none; padding: 14px 32px;
             font-size: 14px; font-weight: 700; border-radius: 50px; cursor: pointer; transition: transform 0.2s;
             text-transform: uppercase; letter-spacing: 1px;
         }
         .btn-open:hover { transform: scale(1.05); }
+
+        /* REPRODUCTOR */
         #main-content { max-width: 480px; width: 100%; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
         .player-card { background: var(--bg-card); border-radius: 12px; padding: 24px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 20px; }
+        
         .photo-container { width: 100%; height: 300px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
         .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+        
         .song-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; text-align: left; }
+        
         .lyrics-box {
             margin-top: 15px; font-size: 15px; line-height: 1.6; color: var(--text-muted);
             background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; min-height: 120px; white-space: pre-line;
         }
+
         .controls-box { display: flex; flex-direction: column; gap: 12px; }
         .modern-select { width: 100%; background: #282828; color: var(--text-main); border: none; padding: 10px 15px; border-radius: 4px; font-size: 14px; outline: none; cursor: pointer; }
+        
         .nav-buttons { display: flex; justify-content: space-between; gap: 15px; }
         .btn-nav { flex: 1; background: transparent; color: var(--text-main); border: 1px solid var(--text-muted); padding: 10px; font-size: 14px; border-radius: 50px; cursor: pointer; transition: all 0.2s; }
         .btn-nav:hover { border-color: var(--text-main); background: rgba(255,255,255,0.05); }
+        
         .spotify-container { width: 100%; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); }
         #confetti-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
     </style>
 </head>
 <body>
     <canvas id="confetti-canvas"></canvas>
+    
     <div id="welcome-screen">
         <div class="welcome-card">
             <h1 class="welcome-title">22</h1>
@@ -71,6 +88,7 @@
             <button class="btn-open" onclick="startExperience()">Escuchar regalo</button>
         </div>
     </div>
+
     <main id="main-content">
         <div class="player-card">
             <div class="photo-container"><img id="song-img" src="" alt="Momento"></div>
@@ -86,56 +104,57 @@
                 </div>
             </div>
         </div>
+
         <div class="spotify-container">
             <iframe style="border-radius:12px" src="https://spotify.com" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
     </main>
-    <script>
-        const playlistData = [
-            { title: "Sanctuary - Joji", lyrics: "Not anyone, you're the one\nMore than fun, you're the sanctuary\n\nNo cualquiera, eres tú.\nMás que diversión, eres el refugio.", photo: "https://unsplash.com" },
-            { title: "Baile inolvidable - Bad Bunny", lyrics: "Mientras uno esté vivo\nuno debe amar lo más que pueda.", photo: "https://unsplash.com" },
-            { title: "White ferrari - Frank Ocean", lyrics: "I care for you still, and I will forever\n\nTodavía me importas, y lo haré para siempre.", photo: "https://unsplash.com" },
-            { title: "El tesoro - El mató a un policía", lyrics: "Voy a quedarme un poco acá\nCuidarte siempre a vos en la derrota\nHasta el final, el final.", photo: "https://unsplash.com" },
-            { title: "Quiéreme - Latin Mafia", lyrics: "Puede que no sepa bailar\nY aún así me quedo por ti.", photo: "https://unsplash.com" },
-            { title: "Te estoy correteando - Latin Mafia", lyrics: "Cuéntame, ¿qué ha sido de ti?\nExtráñame, te extraño a ti.", photo: "https://unsplash.com" },
-            { title: "Godspeed - Frank Ocean", lyrics: "Still, I'll always be there for you\n\nAun así, siempre estaré ahí para ti.", photo: "https://unsplash.com" },
-            { title: "Neo roneo - Rusowsky", lyrics: "Quererte hasta que duela\nTodo este corazón caliente.", photo: "https://unsplash.com" },
-            { title: "Otro atardecer - Bad Bunny", lyrics: "No sé qué sucedió pero\nme perdí en tu mirada.", photo: "https://unsplash.com" },
-            { title: "BBY ROMEO - Rusowsky", lyrics: "Y es que yo no sé lo que tiene\nPero mira cómo me tiene.", photo: "https://unsplash.com" },
-            { title: "Si en tu mente estuve - Nsqk", lyrics: "Cuéntame siquiera si pensaste en lo mismo de siempre.", photo: "https://unsplash.com" },
-            { title: "Yo no soy celoso - Bad Bunny", lyrics: "Tranquila, no soy psycho\nNo vo'a hacer un papelón.", photo: "https://unsplash.com" },
-            { title: "Vivo si me exiges - Latin Mafia", lyrics: "¿Qué he dejado en ti? Me pregunto\nEs que tú me lo has dado todo.", photo: "https://unsplash.com" },
-            { title: "Continuo atardecer - Latin Mafia", lyrics: "Sus cicatrices se volvieron lienzos\nEn cada herida se dio un beso.", photo: "https://unsplash.com" },
-            { title: "Chinita linda - Alvaro Diaz", lyrics: "Dime a ver, chinita linda.", photo: "https://unsplash.com" },
-            { title: "Miau - Young Cister", lyrics: "Con esa mirá' que mata como pistola.", photo: "https://unsplash.com" },
-            { title: "Te lo prometo - Humbe", lyrics: "Volver a abrazarte hasta llorar\nY nunca más volver a soltarte.", photo: "https://unsplash.com" },
-            { title: "YOKO - Alvaro Diaz", lyrics: "Si tú me quisiste cuando ni yo me quería.", photo: "https://unsplash.com" },
-            { title: "2:12AM - Rauw Alejandro", lyrics: "Un mundo perfecto, inventémoslo\nY ven y bésame la boca.", photo: "https://unsplash.com" },
-            { title: "Patadas de ahogado - Latin Mafia", lyrics: "Y que siempre voy a querer saber\nsi va bien todo en tu día.", photo: "https://unsplash.com" },
-            { title: "Se fue la luz - Latin Mafia", lyrics: "Y me está cantando canciones en el pecho.", photo: "https://unsplash.com" },
-            { title: "ESCENCIA - Humbe", lyrics: "Porque perderte es vivir sin mi propia esencia.", photo: "https://unsplash.com" }
-        ];
 
+    <!-- Importación del archivo externo con las letras completas -->
+    <script src="playlist.js"></script>
+      <script>
         let currentIndex = 0;
         const selectElement = document.getElementById('song-select');
+        
+        // Rellenar menú con los datos importados
         playlistData.forEach((song, idx) => {
-            let option = document.createElement('option'); option.value = idx; option.textContent = song.title; selectElement.appendChild(option);
+            let option = document.createElement('option');
+            option.value = idx;
+            option.textContent = song.title;
+            selectElement.appendChild(option);
         });
 
         function updateSongDisplay(index) {
-            currentIndex = index; const song = playlistData[index];
+            currentIndex = index;
+            const song = playlistData[index];
             document.getElementById('song-title').textContent = song.title;
             document.getElementById('song-lyrics').textContent = song.lyrics;
             document.getElementById('song-img').src = song.photo;
             document.getElementById('song-select').value = index;
         }
-        function changeSong(index) { updateSongDisplay(parseInt(index)); }
-        function navigate(direction) { let newIndex = currentIndex + direction; if (newIndex >= 0 && newIndex < playlistData.length) { updateSongDisplay(newIndex); } }
-        function startExperience() { document.getElementById('welcome-screen').classList.add('hidden'); initConfetti(); }
 
-        const canvas = document.getElementById('confetti-canvas'); const ctx = canvas.getContext('2d'); let confetti = [];
+        function changeSong(index) { updateSongDisplay(parseInt(index)); }
+        
+        function navigate(direction) {
+            let newIndex = currentIndex + direction;
+            if (newIndex >= 0 && newIndex < playlistData.length) {
+                updateSongDisplay(newIndex);
+            }
+        }
+
+        function startExperience() {
+            document.getElementById('welcome-screen').classList.add('hidden');
+            initConfetti();
+        }
+
+        // CONTROL ANIMACIÓN CONFETI
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let confetti = [];
+
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
         function initConfetti() {
             const colors = ['#1DB954', '#FFFFFF', '#535353', '#212121'];
@@ -146,14 +165,18 @@
         }
 
         function animateConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); let active = false;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
             confetti.forEach((p, index) => {
                 p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2; p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - index / 3) * 10;
-                if (p.y <= canvas.height) { active = true; }
+                if (p.y <= canvas.height) active = true;
                 ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color; ctx.moveTo(p.x + p.tilt + p.r / 2, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2); ctx.stroke();
             });
-            if (active) { requestAnimationFrame(animateConfetti); } else { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+            if (active) requestAnimationFrame(animateConfetti);
+            else ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
+
+        // Cargar primera canción al abrir
         updateSongDisplay(0);
     </script>
 </body>
