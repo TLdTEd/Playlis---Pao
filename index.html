@@ -76,7 +76,7 @@
             padding: 24px; box-shadow: var(--doodle-shadow); display: flex; flex-direction: column; gap: 15px;
         }
 
-        /* MEDIDA AJUSTADA A 1:1 PERFECTA (640x640) */
+        /* CONTENEDOR CUADRADO PERFECTO 1:1 */
         .photo-container { 
             width: 100%; 
             aspect-ratio: 1 / 1; 
@@ -100,7 +100,7 @@
         .btn-nav { flex: 1; font-family: 'Fredoka', sans-serif; background: var(--box-bg); color: var(--text-dark); border: var(--hand-border); padding: 10px; font-size: 14px; font-weight: 600; border-radius: 12px; cursor: pointer; box-shadow: 3px 3px 0px #1A1A1A; transition: all 0.1s; }
         .btn-nav:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #1A1A1A; }
 
-        /* BOTÓN DE ENLACE DIRECTO A SPOTIFY */
+        /* BOTÓN CON TU ENLACE ACTUALIZADO DEFINITIVO Y ATRIBUTO TARGET BLANK */
         .spotify-link-button {
             display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
             font-family: 'Fredoka', sans-serif; background-color: var(--accent-spotify); color: #FFFFFF;
@@ -148,14 +148,15 @@ Todos los días todo el día eres tú</div>
             </div>
         </div>
 
-         <a href="https://spotify.com" onclick="window.open('spotify:playlist:5dfAJ9jPW6btHq2JGfM57Z', '_blank'); window.open(this.href, '_blank'); return false;" class="spotify-link-button">
+        <!-- ENLACE DE TU PLAYLIST DEFINITIVO SIN JAVASCRIPT QUE FALLE -->
+        <a href="https://open.spotify.com/playlist/5dfAJ9jPW6btHq2JGfM57Z?si=3FWQyTOzRJ-zkgxbBlYl-g" target="_blank" class="spotify-link-button">
             🔊 Escuchar Playlist Completa en Spotify 🎧
         </a>
     </main>
 
-    <!-- Importación de tu archivo externo -->
+    <!-- Importación de tu archivo externo de canciones -->
     <script src="playlist.js"></script>
-      <script>
+     <script>
         let currentIndex = 0;
         const selectElement = document.getElementById('song-select');
         
