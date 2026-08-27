@@ -3,407 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Playlist de Snoopy ✨</title>
-    <!-- Fuentes divertidas y de estilo manuscrito de Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <title>22</title>
+    <!-- Tipografías Estilo Cómic y Manuscrito de Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Fredoka:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --yellow-woodstock: #FCD116;
-            --red-cabin: #E52521;
-            --black-comic: #1A1A1A;
-            --white-bg: #FFFFFF;
+            --bg-color: #FCD116; /* Amarillo Woodstock */
+            --accent-color: #E2231A; /* Rojo Casita de Snoopy */
+            --box-bg: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --border-thick: 4px solid #1A1A1A;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Fredoka', sans-serif;
-            background-color: var(--yellow-woodstock);
-            background-image: radial-gradient(var(--black-comic) 1px, transparent 1px);
-            background-size: 24px 24px;
-            color: var(--black-comic);
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 20px;
         }
 
-        /* Línea ondulada icónica de Charlie Brown en los extremos superiores/inferiores */
-        .header-decor {
-            width: 100%;
-            max-width: 800px;
-            height: 20px;
-            background: repeat-x url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V60c120,0,180-40,300-40s180,40,300,40,180-40,300-40,180,40,300,40V0Z" fill="%231A1A1A"/></svg>');
-            background-size: 100px 20px;
-            margin-bottom: 20px;
-            transform: rotate(180deg);
+        /* --- PANTALLA DE BIENVENIDA --- */
+        #welcome-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: var(--bg-color);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 1000; transition: opacity 0.8s ease, visibility 0.8s; text-align: center; padding: 20px;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            text-align: center;
-            background-color: var(--red-cabin);
-            color: white;
-            padding: 10px 20px;
-            border: 4px solid var(--black-comic);
-            border-radius: 12px;
-            box-shadow: 6px 6px 0px var(--black-comic);
-            margin-bottom: 25px;
-            letter-spacing: 1px;
-            transform: rotate(-1deg);
+        #welcome-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .welcome-card {
+            background: var(--box-bg); border: var(--border-thick);
+            padding: 40px 30px; border-radius: 20px; box-shadow: 8px 8px 0px #1A1A1A;
+            max-width: 450px; width: 100%;
         }
 
-        .comic-container {
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--white-bg);
-            border: 5px solid var(--black-comic);
-            border-radius: 16px;
-            box-shadow: 10px 10px 0px var(--black-comic);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
+        .welcome-title { font-size: 80px; color: var(--accent-color); line-height: 1; margin-bottom: 10px; text-shadow: 3px 3px 0px #1A1A1A; }
+        .welcome-subtitle { font-size: 20px; margin-bottom: 25px; font-weight: bold; }
+        .cake-icon { font-size: 60px; margin-bottom: 25px; animation: bounce 2s infinite ease-in-out; }
 
-        @media (max-width: 650px) {
-            .comic-container {
-                grid-template-columns: 1fr;
-            }
+        .btn-open {
+            font-family: 'Fredoka', sans-serif; background-color: var(--accent-color); color: white;
+            border: var(--border-thick); padding: 12px 30px; font-size: 18px; font-weight: bold;
+            border-radius: 50px; cursor: pointer; box-shadow: 4px 4px 0px #1A1A1A; transition: all 0.1s;
         }
+        .btn-open:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px #1A1A1A; }
 
-        /* Bloque de foto estilo Polaroid */
-        .photo-panel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #fcfcfc;
-            border: 4px solid var(--black-comic);
-            padding: 15px 15px 30px 15px;
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.15);
-            transform: rotate(-2deg);
-            transition: transform 0.3s ease;
-        }
+        /* --- CONTENIDO PRINCIPAL (CÓMIC) --- */
+        #main-content { max-width: 900px; margin: 0 auto; padding: 20px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        .comic-header { background: var(--box-bg); border: var(--border-thick); padding: 10px 30px; transform: rotate(-1deg); box-shadow: 5px 5px 0px #1A1A1A; text-align: center; margin-top: 10px; }
+        .comic-header h2 { font-size: 28px; color: var(--text-dark); }
+        
+        .comic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; width: 100%; margin-top: 10px; }
+        @media (max-width: 768px) { .comic-grid { grid-template-columns: 1fr; } }
 
-        .photo-panel:hover {
-            transform: rotate(1deg) scale(1.02);
-        }
+        .panel-photo { background: var(--box-bg); border: var(--border-thick); padding: 15px; padding-bottom: 40px; box-shadow: 8px 8px 0px #1A1A1A; transform: rotate(-2deg); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 350px; }
+        .polaroid-frame { width: 100%; height: 280px; border: 3px solid #1A1A1A; background-color: #EFEFEF; overflow: hidden; position: relative; }
+        .polaroid-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        .photo-frame {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            background-color: #eee;
-            border: 3px solid var(--black-comic);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
+        .panel-lyrics { background: var(--box-bg); border: var(--border-thick); padding: 25px; box-shadow: 8px 8px 0px #1A1A1A; transform: rotate(1deg); display: flex; flex-direction: column; justify-content: center; position: relative; min-height: 350px; }
+        .speech-bubble { font-family: 'Patrick Hand', cursive; font-size: 23px; line-height: 1.4; color: #1A1A1A; white-space: pre-line; text-align: center; }
 
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        /* --- CONTROLES Y NAVEGACIÓN --- */
+        .controls-container { width: 100%; background: var(--box-bg); border: var(--border-thick); padding: 15px; border-radius: 12px; box-shadow: 6px 6px 0px #1A1A1A; display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .selector-wrapper { width: 100%; max-width: 500px; }
+        select { width: 100%; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: bold; padding: 10px; border: 3px solid #1A1A1A; border-radius: 8px; background-color: #FFF; cursor: pointer; outline: none; }
+        .nav-buttons { display: flex; gap: 15px; }
+        .btn-nav { font-family: 'Fredoka', sans-serif; background-color: var(--box-bg); border: 3px solid #1A1A1A; padding: 8px 20px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 3px 3px 0px #1A1A1A; transition: all 0.1s; }
+        .btn-nav:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #1A1A1A; }
 
-        .track-title-display {
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-align: center;
-            color: var(--black-comic);
-            word-break: break-word;
-        }
-
-        /* Bloque del Bocadillo de Texto (Comic Speech Bubble) */
-        .lyrics-panel {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .speech-bubble {
-            position: relative;
-            background: #FFFFFF;
-            border: 4px solid var(--black-comic);
-            border-radius: 30px;
-            padding: 30px;
-            width: 100%;
-            min-height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
-        }
-
-        /* Cola del bocadillo apuntando hacia la izquierda (o arriba en móvil) */
-        .speech-bubble:after, .speech-bubble:before {
-            right: 100%;
-            top: 50%;
-            border: solid transparent;
-            content: " ";
-            height: 0;
-            width: 0;
-            position: absolute;
-            pointer-events: none;
-        }
-
-        .speech-bubble:after {
-            border-color: rgba(255, 255, 255, 0);
-            border-right-color: #FFFFFF;
-            border-width: 15px;
-            margin-top: -15px;
-        }
-        .speech-bubble:before {
-            border-color: rgba(26, 26, 26, 0);
-            border-right-color: var(--black-comic);
-            border-width: 21px;
-            margin-top: -21px;
-        }
-
-        @media (max-width: 650px) {
-            .speech-bubble:after, .speech-bubble:before {
-                right: auto;
-                top: -30px;
-                left: 50%;
-            }
-            .speech-bubble:after {
-                border-right-color: transparent;
-                border-bottom-color: #FFFFFF;
-                margin-left: -15px;
-                margin-top: 0;
-            }
-            .speech-bubble:before {
-                border-right-color: transparent;
-                border-bottom-color: var(--black-comic);
-                margin-left: -21px;
-                margin-top: -6px;
-            }
-        }
-
-        .lyrics-text {
-            font-family: 'Patrick Hand', cursive;
-            font-size: 1.6rem;
-            line-height: 1.3;
-            text-align: center;
-            color: #222;
-        }
-
-        /* Controles de Navegación */
-        .controls-section {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .btn {
-            background-color: var(--white-bg);
-            border: 3px solid var(--black-comic);
-            border-radius: 10px;
-            padding: 10px 25px;
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            box-shadow: 4px 4px 0px var(--black-comic);
-            transition: all 0.1s ease;
-            user-select: none;
-        }
-
-        .btn:active {
-            transform: translate(3px, 3px);
-            box-shadow: 1px 1px 0px var(--black-comic);
-        }
-
-        .btn-next {
-            background-color: var(--red-cabin);
-            color: white;
-        }
-
-        .select-custom {
-            width: 100%;
-            max-width: 400px;
-            padding: 12px;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1rem;
-            border: 3px solid var(--black-comic);
-            border-radius: 10px;
-            background-color: white;
-            box-shadow: 4px 4px 0px var(--black-comic);
-            outline: none;
-            cursor: pointer;
-        }
-
-        /* Contenedor del reproductor de Spotify */
-        .spotify-container {
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--black-comic);
-            padding: 12px;
-            border-radius: 16px;
-            border: 4px solid var(--black-comic);
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
-        }
-
-        .spotify-container iframe {
-            display: block;
-            border-radius: 12px;
-        }
+        /* --- SPOTIFY EMBED --- */
+        .spotify-container { width: 100%; max-width: 500px; border: var(--border-thick); border-radius: 16px; box-shadow: 6px 6px 0px #1A1A1A; background: #000; overflow: hidden; margin-bottom: 30px; }
+        .spotify-container iframe { display: block; }
+        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
     </style>
 </head>
 <body>
-
-    <div class="header-decor"></div>
-
-    <h1>Nuestra Playlist 🐾</h1>
-
-    <!-- Tablero de Cómic Interactivo -->
-    <div class="comic-container">
-        <!-- Izquierda: Foto Polarid -->
-        <div class="photo-panel">
-            <div class="photo-frame">
-                <img id="track-photo" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=600&auto=format&fit=crop" alt="Foto de momento especial">
+    <canvas id="confetti-canvas"></canvas>
+    <div id="welcome-screen">
+        <div class="welcome-card">
+            <h1 class="welcome-title">22</h1>
+            <p class="welcome-subtitle">Canciones por tus 22 años ✨</p>
+            <div class="cake-icon">🎂🐾</div>
+            <button class="btn-open" onclick="startExperience()">Abrir Regalo</button>
+        </div>
+    </div>
+    <main id="main-content">
+        <div class="comic-header"><h2 id="song-title">Cargando...</h2></div>
+        <div class="comic-grid">
+            <div class="panel-photo"><div class="polaroid-frame"><img id="song-img" src="" alt="Momento"></div></div>
+            <div class="panel-lyrics"><div class="speech-bubble" id="song-lyrics">Cargando...</div></div>
+        </div>
+        <div class="controls-container">
+            <div class="selector-wrapper"><select id="song-select" onchange="changeSong(this.value)"></select></div>
+            <div class="nav-buttons">
+                <button class="btn-nav" onclick="navigate(-1)">⬅ Anterior</button>
+                <button class="btn-nav" onclick="navigate(1)">Siguiente ➡</button>
             </div>
-            <div class="track-title-display" id="track-title">Cargando...</div>
         </div>
-
-        <!-- Derecha: Letra en bocadillo de diálogo -->
-        <div class="lyrics-panel">
-            <div class="speech-bubble">
-                <p class="lyrics-text" id="track-lyrics">«¡Elige una canción para ver el fragmento dedicado!»</p>
-            </div>
+        <div class="spotify-container">
+            <iframe style="border-radius:12px" src="https://spotify.com" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
-    </div>
-
-    <!-- Sección de controles de navegación -->
-    <div class="controls-section">
-        <div class="nav-buttons">
-            <button class="btn" id="btn-prev">⬅ Anterior</button>
-            <button class="btn btn-next" id="btn-next">Siguiente ➡</button>
-        </div>
-        
-        <select class="select-custom" id="track-select">
-            <!-- Las opciones se generarán dinámicamente con JavaScript -->
-        </select>
-    </div>
-
-    <!-- Bloque Fijo del Widget de tu Playlist de Spotify -->
-    <div class="spotify-container">
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5dfAJ9jPW6btHq2JGfM57Z?utm_source=generator&si=f2fe0b7df04743e9" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </div>
-
-    <script>
-        // 📋 CONFIGURA AQUÍ TUS CANCIONES, LETRAS Y FOTOS
-        // He incluido algunas de las canciones que leí en tu lista de reproducción para que veas la estructura.
-        // Puedes cambiar el texto dentro de 'lyrics' y pegar links de fotos en 'photo'.
+    </main>
+     <script>
         const playlistData = [
-            {
-                title: "1. Bound 2 - Kanye West",
-                lyrics: "«Uh-huh, honey... Agrega aquí el fragmento de letra que más te encante de esta canción.»",
-                photo: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600&auto=format&fit=crop"
-            },
-            {
-                title: "2. Sanctuary - Joji",
-                lyrics: "«If you've been waiting for falling in love, babe, you don't have to wait on me...»",
-                photo: "https://images.unsplash.com/photo-1516624683217-bf02fc6b6b7c?q=80&w=600&auto=format&fit=crop"
-            },
-            {
-                title: "7. Quiereme - LATIN MAFIA, Fred again..",
-                lyrics: "«Quédate otro ratito más, que me hace bien la forma en la que me miras...»",
-                photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=600&auto=format&fit=crop"
-            },
-            {
-                title: "13. Otro Atardecer - Bad Bunny, The Marías",
-                lyrics: "«Por si no te vuelvo a ver, me pongo a recordar todo lo que me diste una tarde frente al mar...»",
-                photo: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop"
-            },
-            {
-                title: "32. YOKO - Alvaro Diaz",
-                lyrics: "«Si el mundo se acabara hoy, yo te elegiría a ti una y mil veces más...»",
-                photo: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop"
-            },
-            {
-                title: "34. Patadas de Ahogado - LATIN MAFIA, HUMBE",
-                lyrics: "«Y es que por ti yo todo lo siento, contigo no hay miedo, eres mi lugar seguro...»",
-                photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop"
-            }
-            // Puedes seguir añadiendo bloques de llaves {} separados por comas para las 39 canciones.
+            { title: "1. Sanctuary - Joji", lyrics: "«Inglés:\nNot anyone, you're the one\nMore than fun, you're the sanctuary\n'Cause what you want is what I want\nSincerity\n\nEspañol:\nNo cualquiera, eres tú.\nMás que diversión, eres el refugio.\nPorque lo que tú quieres es lo que yo quiero:\nSinceridad.»", photo: "https://unsplash.com" },
+            { title: "2. Baile inolvidable - Bad Bunny", lyrics: "«Mientras uno esté vivo\nuno debe amar lo más que pueda.»", photo: "https://unsplash.com" },
+            { title: "3. White ferrari - Frank Ocean", lyrics: "«Inglés:\nI care for you still, and I will forever\nThat was my part of the deal, honest\nWe got so familiar\n\nEspañol:\nTodavía me importas, y lo haré para siempre.\nEsa era mi parte del trato, de verdad\nNos volvimos tan cercanos.»", photo: "https://unsplash.com" },
+            { title: "4. El tesoro - El mató a un policía motorizado", lyrics: "«Perdón si estoy de nuevo acá\nPensé que habías preguntado por mí\nMe gusta estar de nuevo acá\nAunque no hayas preguntado por mí\nVoy a quedarme un poco acá\nCuidarte siempre a vos en la derrota\nHasta el final, el final»", photo: "https://unsplash.com" },
+            { title: "5. Quiéreme - Latin Mafia / Fred again..", lyrics: "«Puede que no sepa bailar\nY aún así me quedo por ti\nYo no me puedo acostar\nY aún así me acuesto en ti»", photo: "https://unsplash.com" },
+            { title: "6. Te estoy correteando - Latin Mafia", lyrics: "«Cuéntame, ¿qué ha sido de ti?\nExtráñame, te extraño a ti»", photo: "https://unsplash.com" },
+            { title: "7. Godspeed - Frank Ocean", lyrics: "«Inglés:\nWishing you godspeed, glory\nThere will be mountains you won't move\nStill, I'll always be there for you\nHow I do\nI let go of my claim on you\nIt's a free world\nYou'll look down on where you came from sometimes\nBut you'll have this place to call home, always\n\nEspañol:\nTe deseo buen camino y gloria.\nHabrá montañas que no podrás mover;\naun así, siempre estaré ahí para ti.\nEs lo que hago:\nrenuncio a cualquier derecho sobre ti.\nEs un mundo libre.\nA veces mirarás hacia atrás, hacia tus orígenes,\npero siempre tendrás este lugar al que llamar hogar.»", photo: "https://unsplash.com" },
+            { title: "8. Neo roneo - Rusowsky / Latin Mafia", lyrics: "«Quererte hasta que duela\nTodo este corazón caliente, no me sirve la mente\nNunca me ha fallado, siempre ha sido pa' quererte»", photo: "https://unsplash.com" },
+            { title: "9. Otro atardecer - Bad Bunny / The Marías", lyrics: "«Hay mucho de mí que te faltó conocer\nSi la vida me da de nuevo el placer\nVoy a volverte a besar como aquella ve' que el sol se escondió\nMientras la noche llegaba\nNo sé qué sucedió pero me perdí en tu mirada»", photo: "https://unsplash.com" },
+            { title: "10. BBY ROMEO - Rusowsky / Ralphie Choo", lyrics: "«Y es que yo no sé lo que tiene\nPero mira cómo me tiene\nNo lo olvido nunca, nunca, nunca\n¿Esa niña qué es lo que tiene?\nPorque mira cómo me tiene\nNo lo olvido nunca, nunca, nunca»", photo: "https://unsplash.com" },
+            { title: "11. Si en tu mente estuve - Nsqk", lyrics: "«Cuéntame siquiera si pensaste en lo mismo de siempre\nCuéntame siquiera si soñaste con un campo verde\nQue solo quiero saber\nSi todas las cosas que te prometiste\nYa están por llegar o cuántas ya cumpliste\nY si es que quieres verme»", photo: "https://unsplash.com" },
+            { title: "12. Yo no soy celoso - Bad Bunny", lyrics: "«Yo no soy celoso, ¿pero quién e' ese cabrón?\nDime quién e' ese cabrón\nTranquila, no soy psycho\nNo vo'a hacer un papelón, pero\nAuch, mi corazón»", photo: "https://unsplash.com" },
+            { title: "13. Vivo si me exiges - Latin Mafia", lyrics: "«¿Qué he dejado en ti? Me pregunto qué habrá\nEs que tú me lo has dado todo»", photo: "https://unsplash.com" },
+            { title: "14. Continuo atardecer - Latin Mafia", lyrics: "«Esa niña siempre luce bien\nAprendió a sentirse siempre como un diez\nNo le tiene miedo a lo que fue ayer\nYeah, y si le tiene miedo\nNo importa, tiene tiempo pa' entenderlo\nSus cicatrices se volvieron lienzos\nEn cada herida se dio un beso\nAhora el espejo la adora\nSiempre se ve mona»", photo: "https://unsplash.com" },
+            { title: "15. Chinita linda - Alvaro Diaz / Rawayana", lyrics: "«Dime a ver, chinita linda»", photo: "https://unsplash.com" },
+            { title: "16. Miau - Young Cister", lyrics: "«Con esa mirá' que mata como pistola\nSi un hueón le grita, ella se pica a chora\nSigue siendo fina, maquillaje 'e Sephora\nA vece' fría como un freezer\nY cuando está caliente, por mensaje' me lo dice»", photo: "https://unsplash.com" },
+            { title: "17. Te lo prometo - Humbe", lyrics: "«Quiero acordarme y regresar a ese lugar\nVolver a abrazarte hasta llorar\nY nunca más volver a soltarte\nY siempre aferrarme a nunca volver a olvidarte»", photo: "https://unsplash.com" },
+            { title: "18. YOKO - Alvaro Diaz", lyrics: "«Si tú me quisiste cuando ni yo me quería\nQue tú me quisiste cuando ni yo me quería»", photo: "https://unsplash.com" },
+            { title: "19. 2:12AM - Rauw Alejandro / Latin Mafia", lyrics: "«Te vuelvo a tener, amémonos'\nUn mundo perfecto, inventémoslo y ven\nVen y bésame la boca»", photo: "https://unsplash.com" },
+            { title: "20. Patadas de ahogado - Latin Mafia / Humbe", lyrics: "«Porque yo ya sabía a lo que iba\nQuerer comprarnos un terreno y construirnos la vida\nPorque contigo lo sabía\nQue tú y yo vamos por la milla\nY que siempre voy a querer saber si va bien todo en tu día\n¿Qué tal va tu día?\nEs lo que me importa, mi vida»", photo: "https://unsplash.com" },
+            { title: "21. Se fue la luz - Latin Mafia / Jesse Baez", lyrics: "«Se fue la luz, se fue la luz\nY alcanzó a ver sus ojos en mi reflejo\nSe fue la luz, se fue la luz\nY me está cantando canciones en el pecho»", photo: "https://unsplash.com" },
+            { title: "22. ESCENCIA - Humbe", lyrics: "«Cuando me faltó, me diste razón\n¿Qué va a pasar el día que ya no te tenga?\nCuando el mundo ya no siga y se detenga\nCuando en la gloria solo piense en tu ausencia\nPorque perderte es vivir sin mi propia esencia»", photo: "https://unsplash.com" }
         ];
 
         let currentIndex = 0;
+        const selectElement = document.getElementById('song-select');
+        playlistData.forEach((song, idx) => {
+            let option = document.createElement('option'); option.value = idx; option.textContent = song.title; selectElement.appendChild(option);
+        });
 
-        // Elementos del DOM
-        const trackPhoto = document.getElementById('track-photo');
-        const trackTitle = document.getElementById('track-title');
-        const trackLyrics = document.getElementById('track-lyrics');
-        const trackSelect = document.getElementById('track-select');
-        const btnPrev = document.getElementById('btn-prev');
-        const btnNext = document.getElementById('btn-next');
+        function updateSongDisplay(index) {
+            currentIndex = index; const song = playlistData[index];
+            document.getElementById('song-title').textContent = song.title;
+            document.getElementById('song-lyrics').textContent = song.lyrics;
+            document.getElementById('song-img').src = song.photo;
+            document.getElementById('song-select').value = index;
+        }
+        function changeSong(index) { updateSongDisplay(parseInt(index)); }
+        function navigate(direction) { let newIndex = currentIndex + direction; if (newIndex >= 0 && newIndex < playlistData.length) { updateSongDisplay(newIndex); } }
+        function startExperience() { document.getElementById('welcome-screen').classList.add('hidden'); initConfetti(); }
 
-        // Inicializar el Selector desplegable
-        function initDropdown() {
-            playlistData.forEach((track, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = track.title;
-                trackSelect.appendChild(option);
+        const canvas = document.getElementById('confetti-canvas'); const ctx = canvas.getContext('2d'); let confetti = [];
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+        function initConfetti() {
+            const colors = ['#E2231A', '#1A1A1A', '#FFFFFF', '#6FA8DC', '#F1C232'];
+            for (let i = 0; i < 100; i++) {
+                confetti.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, r: Math.random() * 6 + 4, d: Math.random() * canvas.height, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.07 + 0.02, tiltAngle: 0 });
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); let active = false;
+            confetti.forEach((p, index) => {
+                p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2; p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - index / 3) * 15;
+                if (p.y <= canvas.height) { active = true; }
+                ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color; ctx.moveTo(p.x + p.tilt + p.r / 2, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2); ctx.stroke();
             });
+            if (active) { requestAnimationFrame(animateConfetti); } else { ctx.clearRect(0, 0, canvas.width, canvas.height); }
         }
-
-        // Renderizar la canción actual
-        function updateUI(index) {
-            const currentTrack = playlistData[index];
-            trackPhoto.src = currentTrack.photo;
-            trackTitle.textContent = currentTrack.title;
-            trackLyrics.textContent = currentTrack.lyrics;
-            trackSelect.value = index;
-        }
-
-        // Eventos de Navegación
-        btnPrev.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + playlistData.length) % playlistData.length;
-            updateUI(currentIndex);
-        });
-
-        btnNext.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % playlistData.length;
-            updateUI(currentIndex);
-        });
-
-        trackSelect.addEventListener('change', (e) => {
-            currentIndex = parseInt(e.target.value);
-            updateUI(currentIndex);
-        });
-
-        // Arrancar la web
-        initDropdown();
-        if(playlistData.length > 0) {
-            updateUI(0);
-        }
+     updateSongDisplay(0);
     </script>
 </body>
 </html>
