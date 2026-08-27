@@ -37,12 +37,12 @@ const playlistData = [
     {
         title: "8. Neo roneo - Rusowsky / Latin Mafia",
         lyrics: "Quererte hasta que duela\nTodo este corazón caliente, no me sirve la mente\nNunca me ha fallado, siempre ha sido pa' quererte",
-        photo: "neoroneo.png"
+        photo: "Neoroneo.png"
     },
     {
         title: "9. Otro atardecer - Bad Bunny / The Marías",
         lyrics: "Hay mucho de mí que te faltó conocer\nSi la vida me da de nuevo el placer\nVoy a volverte a besar como aquella ve' que el sol se escondió\nMientras la noche llegaba\nNo sé qué sucedió pero me perdí en tu mirada",
-        photo: "Neoroneo.png"
+        photo: "Veranosinti.png"
     },
     {
         title: "10. BBY ROMEO - Rusowsky / Ralphie Choo",
@@ -54,7 +54,7 @@ const playlistData = [
         lyrics: "Cuéntame siquiera si pensaste en lo mismo de siempre\nCuéntame siquiera si soñaste con un campo verde\nQue solo quiero saber\nSi todas las cosas que te prometiste\nYa están por llegar o cuántas ya cumpliste\nY si es que quieres verme",
         photo: "Roy.png"
     },
-      {
+     {
         title: "12. Yo no soy celoso - Bad Bunny",
         lyrics: "Yo no soy celoso, ¿pero quién e' ese cabrón?\nDime quién e' ese cabrón\nTranquila, no soy psycho\nNo vo'a hacer un papelón, pero\nAuch, mi corazón",
         photo: "Veranosinti.png"
