@@ -3,35 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>22</title>
+    <title>22 ✨</title>
+    <!-- Tipografías Estilo Garabato e Ilustración de Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Fredoka:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-main: #121212; /* Negro Spotify */
-            --bg-card: #181818; /* Gris oscuro paneles */
-            --accent: #1DB954;  /* Verde oficial */
-            --text-main: #FFFFFF;
-            --text-muted: #B3B3B3;
-            --shadow: 0 8px 24px rgba(0,0,0,0.6);
+            --bg-cream: #FDFBF7; /* Fondo papel de ilustración */
+            --accent-woodstock: #FFDE4D; /* Amarillo Woodstock suave */
+            --accent-snoopy: #FF6B6B; /* Rojo tierno */
+            --text-dark: #1A1A1A;
+            --box-bg: #FFFFFF;
+            --hand-border: 3px solid #1A1A1A;
+            --doodle-shadow: 5px 5px 0px #1A1A1A;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
+            padding: 10px;
         }
 
-        /* PANTALLA ENTRADA */
+        /* --- BIENVENIDA DOODLE POÉTIQUE --- */
         #welcome-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: var(--bg-main);
+            background-color: var(--bg-cream);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             z-index: 1000; transition: opacity 0.6s ease, visibility 0.6s; padding: 20px;
         }
@@ -39,62 +50,217 @@
         #welcome-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
         .welcome-card {
-            background: var(--bg-card); padding: 40px; border-radius: 12px;
-            box-shadow: var(--shadow); max-width: 400px; width: 100%; text-align: center;
+            background: var(--box-bg);
+            padding: 40px 25px;
+            border: var(--hand-border);
+            border-radius: 20px;
+            box-shadow: var(--doodle-shadow);
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            position: relative;
         }
 
-        .welcome-title { font-size: 64px; font-weight: 800; margin-bottom: 5px; }
-        .welcome-subtitle { font-size: 14px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 30px; text-transform: uppercase; }
+        /* Decoración de estrellas dibujadas en las esquinas */
+        .welcome-card::before { content: '✨'; position: absolute; top: 15px; left: 15px; font-size: 20px; }
+        .welcome-card::after { content: '🐾'; position: absolute; bottom: 15px; right: 15px; font-size: 20px; }
+
+        .welcome-poem {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 22px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            white-space: pre-line;
+        }
+
+        .welcome-birthday {
+            font-size: 20px;
+            font-weight: 600;
+            background-color: var(--accent-woodstock);
+            padding: 6px 15px;
+            border: var(--hand-border);
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 30px;
+            transform: rotate(-1deg);
+        }
 
         .btn-open {
-            background-color: var(--accent); color: #000000; border: none; padding: 14px 32px;
-            font-size: 14px; font-weight: 700; border-radius: 50px; cursor: pointer; transition: transform 0.2s;
-            text-transform: uppercase; letter-spacing: 1px;
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--accent-snoopy);
+            color: white;
+            border: var(--hand-border);
+            padding: 12px 32px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #1A1A1A;
+            transition: transform 0.1s, box-shadow 0.1s;
+            text-transform: uppercase;
         }
-        .btn-open:hover { transform: scale(1.05); }
 
-        /* REPRODUCTOR */
-        #main-content { max-width: 480px; width: 100%; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
-        .player-card { background: var(--bg-card); border-radius: 12px; padding: 24px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 20px; }
-        
-        .photo-container { width: 100%; height: 300px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
-        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .song-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; text-align: left; }
-        
+        .btn-open:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0px 0px 0px #1A1A1A;
+        }
+
+        /* --- REPRODUCTOR PRINCIPAL --- */
+        #main-content {
+            max-width: 460px;
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .player-card {
+            background: var(--box-bg);
+            border: var(--hand-border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--doodle-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+
+        .photo-container {
+            width: 100%;
+            height: 280px;
+            border: var(--hand-border);
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: #FAF6F0;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-container {
+            text-align: center;
+            padding: 5px 0;
+        }
+
+        .song-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-block;
+            border-bottom: 2px dashed var(--text-dark);
+            padding-bottom: 2px;
+        }
+
         .lyrics-box {
-            margin-top: 15px; font-size: 15px; line-height: 1.6; color: var(--text-muted);
-            background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; min-height: 120px; white-space: pre-line;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 22px;
+            line-height: 1.5;
+            color: #333333;
+            background: #FDFDFD;
+            border: 2px dashed #CCCCCC;
+            padding: 15px;
+            border-radius: 12px;
+            min-height: 110px;
+            white-space: pre-line;
         }
 
-        .controls-box { display: flex; flex-direction: column; gap: 12px; }
-        .modern-select { width: 100%; background: #282828; color: var(--text-main); border: none; padding: 10px 15px; border-radius: 4px; font-size: 14px; outline: none; cursor: pointer; }
-        
-        .nav-buttons { display: flex; justify-content: space-between; gap: 15px; }
-        .btn-nav { flex: 1; background: transparent; color: var(--text-main); border: 1px solid var(--text-muted); padding: 10px; font-size: 14px; border-radius: 50px; cursor: pointer; transition: all 0.2s; }
-        .btn-nav:hover { border-color: var(--text-main); background: rgba(255,255,255,0.05); }
-        
-        .spotify-container { width: 100%; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); }
-        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
+        /* CONTROLES DOODLE */
+        .controls-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modern-select {
+            width: 100%;
+            font-family: 'Fredoka', sans-serif;
+            background: var(--box-bg);
+            color: var(--text-dark);
+            border: var(--hand-border);
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            flex: 1;
+            font-family: 'Fredoka', sans-serif;
+            background: var(--box-bg);
+            color: var(--text-dark);
+            border: var(--hand-border);
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #1A1A1A;
+            transition: all 0.1s;
+        }
+
+        .btn-nav:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #1A1A1A;
+        }
+
+        /* WIDGET SPOTIFY */
+        .spotify-container {
+            width: 100%;
+            border: var(--hand-border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--doodle-shadow);
+            background: #000;
+        }
+
+        .spotify-container iframe { display: block; }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 999;
+        }
     </style>
 </head>
 <body>
     <canvas id="confetti-canvas"></canvas>
     
+    <!-- PRESENTACIÓN DOODLE -->
     <div id="welcome-screen">
         <div class="welcome-card">
-            <h1 class="welcome-title">22</h1>
-            <p class="welcome-subtitle">Tus 22 años en canciones ✨</p>
-            <button class="btn-open" onclick="startExperience()">Escuchar regalo</button>
+            <div class="welcome-poem">Todos los días todo el día me puedo sentir bien
+Todos los días todo el día me puedo sentir terrible
+Todos los días todo el día te extraño
+Todos los días todo el día eres tú</div>
+            <div class="welcome-birthday">Felices 22 años de vida 🐾</div>
+            <div>
+                <button class="btn-open" onclick="startExperience()">Abrir Regalo ✨</button>
+            </div>
         </div>
     </div>
 
+    <!-- CONTENIDO WEB -->
     <main id="main-content">
         <div class="player-card">
             <div class="photo-container"><img id="song-img" src="" alt="Momento"></div>
             <div class="info-container">
                 <div class="song-title" id="song-title">Cargando...</div>
-                <div class="lyrics-box" id="song-lyrics">Cargando letras...</div>
+                <div class="lyrics-box" id="song-lyrics">Cargando dedicatoria...</div>
             </div>
             <div class="controls-box">
                 <select id="song-select" class="modern-select" onchange="changeSong(this.value)"></select>
@@ -110,13 +276,13 @@
         </div>
     </main>
 
-    <!-- Importación del archivo externo con las letras completas -->
+    <!-- Importación de tu archivo externo -->
     <script src="playlist.js"></script>
       <script>
         let currentIndex = 0;
         const selectElement = document.getElementById('song-select');
         
-        // Rellenar menú con los datos importados
+        // Cargar menú desplegable desde el archivo JS externo
         playlistData.forEach((song, idx) => {
             let option = document.createElement('option');
             option.value = idx;
@@ -147,7 +313,7 @@
             initConfetti();
         }
 
-        // CONTROL ANIMACIÓN CONFETI
+        // CONFETI ESTILO DOODLE (Colores Peanuts)
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
         let confetti = [];
@@ -157,9 +323,9 @@
         resizeCanvas();
 
         function initConfetti() {
-            const colors = ['#1DB954', '#FFFFFF', '#535353', '#212121'];
+            const colors = ['#FFDE4D', '#FF6B6B', '#1A1A1A', '#6FA8DC', '#FFFFFF'];
             for (let i = 0; i < 60; i++) {
-                confetti.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, r: Math.random() * 4 + 2, d: Math.random() * canvas.height, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.05, tiltAngle: 0 });
+                confetti.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, r: Math.random() * 5 + 3, d: Math.random() * canvas.height, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.05, tiltAngle: 0 });
             }
             animateConfetti();
         }
@@ -176,7 +342,6 @@
             else ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        // Cargar primera canción al abrir
         updateSongDisplay(0);
     </script>
 </body>
