@@ -4,116 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>22</title>
-    <!-- Tipografías Estilo Cómic y Manuscrito de Google Fonts -->
+    <!-- Tipografías Elegantes de Google Fonts -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Fredoka:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #FCD116; /* Amarillo Woodstock */
-            --accent-color: #E2231A; /* Rojo Casita de Snoopy */
-            --box-bg: #FFFFFF;
-            --text-dark: #1A1A1A;
-            --border-thick: 4px solid #1A1A1A;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Fredoka', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* --- PANTALLA DE BIENVENIDA --- */
-        #welcome-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: var(--bg-color);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 1000; transition: opacity 0.8s ease, visibility 0.8s; text-align: center; padding: 20px;
-        }
-
-        #welcome-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-
-        .welcome-card {
-            background: var(--box-bg); border: var(--border-thick);
-            padding: 40px 30px; border-radius: 20px; box-shadow: 8px 8px 0px #1A1A1A;
-            max-width: 450px; width: 100%;
-        }
-
-        .welcome-title { font-size: 80px; color: var(--accent-color); line-height: 1; margin-bottom: 10px; text-shadow: 3px 3px 0px #1A1A1A; }
-        .welcome-subtitle { font-size: 20px; margin-bottom: 25px; font-weight: bold; }
-        .cake-icon { font-size: 60px; margin-bottom: 25px; animation: bounce 2s infinite ease-in-out; }
-
-        .btn-open {
-            font-family: 'Fredoka', sans-serif; background-color: var(--accent-color); color: white;
-            border: var(--border-thick); padding: 12px 30px; font-size: 18px; font-weight: bold;
-            border-radius: 50px; cursor: pointer; box-shadow: 4px 4px 0px #1A1A1A; transition: all 0.1s;
-        }
-        .btn-open:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px #1A1A1A; }
-
-        /* --- CONTENIDO PRINCIPAL (CÓMIC) --- */
-        #main-content { max-width: 900px; margin: 0 auto; padding: 20px; display: flex; flex-direction: column; gap: 20px; align-items: center; }
-        .comic-header { background: var(--box-bg); border: var(--border-thick); padding: 10px 30px; transform: rotate(-1deg); box-shadow: 5px 5px 0px #1A1A1A; text-align: center; margin-top: 10px; }
-        .comic-header h2 { font-size: 28px; color: var(--text-dark); }
-        
-        .comic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; width: 100%; margin-top: 10px; }
-        @media (max-width: 768px) { .comic-grid { grid-template-columns: 1fr; } }
-
-        .panel-photo { background: var(--box-bg); border: var(--border-thick); padding: 15px; padding-bottom: 40px; box-shadow: 8px 8px 0px #1A1A1A; transform: rotate(-2deg); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 350px; }
-        .polaroid-frame { width: 100%; height: 280px; border: 3px solid #1A1A1A; background-color: #EFEFEF; overflow: hidden; position: relative; }
-        .polaroid-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        .panel-lyrics { background: var(--box-bg); border: var(--border-thick); padding: 25px; box-shadow: 8px 8px 0px #1A1A1A; transform: rotate(1deg); display: flex; flex-direction: column; justify-content: center; position: relative; min-height: 350px; }
-        .speech-bubble { font-family: 'Patrick Hand', cursive; font-size: 23px; line-height: 1.4; color: #1A1A1A; white-space: pre-line; text-align: center; }
-
-        /* --- CONTROLES Y NAVEGACIÓN --- */
-        .controls-container { width: 100%; background: var(--box-bg); border: var(--border-thick); padding: 15px; border-radius: 12px; box-shadow: 6px 6px 0px #1A1A1A; display: flex; flex-direction: column; gap: 15px; align-items: center; }
-        .selector-wrapper { width: 100%; max-width: 500px; }
-        select { width: 100%; font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: bold; padding: 10px; border: 3px solid #1A1A1A; border-radius: 8px; background-color: #FFF; cursor: pointer; outline: none; }
-        .nav-buttons { display: flex; gap: 15px; }
-        .btn-nav { font-family: 'Fredoka', sans-serif; background-color: var(--box-bg); border: 3px solid #1A1A1A; padding: 8px 20px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 3px 3px 0px #1A1A1A; transition: all 0.1s; }
-        .btn-nav:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #1A1A1A; }
-
-        /* --- SPOTIFY EMBED --- */
-        .spotify-container { width: 100%; max-width: 500px; border: var(--border-thick); border-radius: 16px; box-shadow: 6px 6px 0px #1A1A1A; background: #000; overflow: hidden; margin-bottom: 30px; }
-        .spotify-container iframe { display: block; }
-        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    </style>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Vinculación con tu archivo CSS separado -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <canvas id="confetti-canvas"></canvas>
+    
+    <!-- PORTADA: CARTA DIGITAL -->
     <div id="welcome-screen">
         <div class="welcome-card">
             <h1 class="welcome-title">22</h1>
-            <p class="welcome-subtitle">Canciones por tus 22 años ✨</p>
-            <div class="cake-icon">🎂🐾</div>
-            <button class="btn-open" onclick="startExperience()">Abrir Regalo</button>
-        </div>
-    </div>
-    <main id="main-content">
-        <div class="comic-header"><h2 id="song-title">Cargando...</h2></div>
-        <div class="comic-grid">
-            <div class="panel-photo"><div class="polaroid-frame"><img id="song-img" src="" alt="Momento"></div></div>
-            <div class="panel-lyrics"><div class="speech-bubble" id="song-lyrics">Cargando...</div></div>
-        </div>
-        <div class="controls-container">
-            <div class="selector-wrapper"><select id="song-select" onchange="changeSong(this.value)"></select></div>
-            <div class="nav-buttons">
-                <button class="btn-nav" onclick="navigate(-1)">⬅ Anterior</button>
-                <button class="btn-nav" onclick="navigate(1)">Siguiente ➡</button>
+            <p class="welcome-subtitle">un año entero de tu música ✨</p>
+            <div class="letter-seal" onclick="startExperience()">💌</div>
+            <div>
+                <button class="btn-open" onclick="startExperience()">Abrir carta</button>
             </div>
         </div>
+    </div>
+
+    <!-- PÁGINA PRINCIPAL -->
+    <main id="main-content">
+        <div class="soft-header">
+            <h2 id="song-title">Cargando melodía...</h2>
+        </div>
+
+        <div class="aesthetic-grid">
+            <div class="panel-photo">
+                <div class="photo-frame">
+                    <img id="song-img" src="" alt="Momento">
+                </div>
+            </div>
+            <div class="panel-lyrics">
+                <div class="lyrics-text" id="song-lyrics">
+                    Cargando versos...
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-container">
+            <div class="selector-wrapper">
+                <select id="song-select" onchange="changeSong(this.value)"></select>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-nav" onclick="navigate(-1)">Anterior</button>
+                <button class="btn-nav" onclick="navigate(1)">Siguiente</button>
+            </div>
+        </div>
+
         <div class="spotify-container">
             <iframe style="border-radius:12px" src="https://spotify.com" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
     </main>
-     <script>
+
+    <script>
         const playlistData = [
             { title: "1. Sanctuary - Joji", lyrics: "«Inglés:\nNot anyone, you're the one\nMore than fun, you're the sanctuary\n'Cause what you want is what I want\nSincerity\n\nEspañol:\nNo cualquiera, eres tú.\nMás que diversión, eres el refugio.\nPorque lo que tú quieres es lo que yo quiero:\nSinceridad.»", photo: "https://unsplash.com" },
             { title: "2. Baile inolvidable - Bad Bunny", lyrics: "«Mientras uno esté vivo\nuno debe amar lo más que pueda.»", photo: "https://unsplash.com" },
@@ -136,7 +83,7 @@
             { title: "19. 2:12AM - Rauw Alejandro / Latin Mafia", lyrics: "«Te vuelvo a tener, amémonos'\nUn mundo perfecto, inventémoslo y ven\nVen y bésame la boca»", photo: "https://unsplash.com" },
             { title: "20. Patadas de ahogado - Latin Mafia / Humbe", lyrics: "«Porque yo ya sabía a lo que iba\nQuerer comprarnos un terreno y construirnos la vida\nPorque contigo lo sabía\nQue tú y yo vamos por la milla\nY que siempre voy a querer saber si va bien todo en tu día\n¿Qué tal va tu día?\nEs lo que me importa, mi vida»", photo: "https://unsplash.com" },
             { title: "21. Se fue la luz - Latin Mafia / Jesse Baez", lyrics: "«Se fue la luz, se fue la luz\nY alcanzó a ver sus ojos en mi reflejo\nSe fue la luz, se fue la luz\nY me está cantando canciones en el pecho»", photo: "https://unsplash.com" },
-            { title: "22. ESCENCIA - Humbe", lyrics: "«Cuando me faltó, me diste razón\n¿Qué va a pasar el día que ya no te tenga?\nCuando el mundo ya no siga y se detenga\nCuando en la gloria solo piense en tu ausencia\nPorque perderte es vivir sin mi propia esencia»", photo: "https://unsplash.com" }
+            { title: "22. ESCENCIA - Humbe", lyrics: "«Cuando me faltó, me diste razón\n¿Qué va a pasar el día que ya no te tenga?\nCuando el mundo ya no siga y se detenga\nCuando en la gloria solo piense en tu Physen\nPorque perderte es vivir sin mi propia esencia»", photo: "https://unsplash.com" }
         ];
 
         let currentIndex = 0;
@@ -161,9 +108,9 @@
         window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
         function initConfetti() {
-            const colors = ['#E2231A', '#1A1A1A', '#FFFFFF', '#6FA8DC', '#F1C232'];
-            for (let i = 0; i < 100; i++) {
-                confetti.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, r: Math.random() * 6 + 4, d: Math.random() * canvas.height, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.07 + 0.02, tiltAngle: 0 });
+            const colors = ['#FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA'];
+            for (let i = 0; i < 80; i++) {
+                confetti.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, r: Math.random() * 5 + 3, d: Math.random() * canvas.height, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.05 + 0.01, tiltAngle: 0 });
             }
             animateConfetti();
         }
@@ -171,13 +118,13 @@
         function animateConfetti() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); let active = false;
             confetti.forEach((p, index) => {
-                p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2; p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - index / 3) * 15;
+                p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 2 + p.r / 2) / 2; p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - index / 3) * 12;
                 if (p.y <= canvas.height) { active = true; }
                 ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color; ctx.moveTo(p.x + p.tilt + p.r / 2, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2); ctx.stroke();
             });
             if (active) { requestAnimationFrame(animateConfetti); } else { ctx.clearRect(0, 0, canvas.width, canvas.height); }
         }
-     updateSongDisplay(0);
+        updateSongDisplay(0);
     </script>
 </body>
 </html>
