@@ -76,7 +76,14 @@
             padding: 24px; box-shadow: var(--doodle-shadow); display: flex; flex-direction: column; gap: 15px;
         }
 
-        .photo-container { width: 100%; height: 280px; border: var(--hand-border); border-radius: 16px; overflow: hidden; background-color: #FAF6F0; }
+        .photo-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Esto fuerza a que sea perfectamente cuadrada 1:1 */
+    border: var(--hand-border);
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #FAF6F0;
+}
         .photo-container img { width: 100%; height: 100%; object-fit: cover; }
         
         .info-container { text-align: center; padding: 5px 0; }
