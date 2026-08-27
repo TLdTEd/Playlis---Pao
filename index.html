@@ -3,74 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>22</title>
-    <!-- Tipografías Elegantes de Google Fonts -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <!-- Vinculación con tu archivo CSS separado -->
+    <title>22.EXE</title>
+    <!-- Vinculación con tu archivo CSS de estilo retro -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <canvas id="confetti-canvas"></canvas>
     
-    <!-- PORTADA: CARTA DIGITAL -->
+    <!-- PANTALLA DE ARRANQUE (TERMINAL CYBER) -->
     <div id="welcome-screen">
-        <div class="welcome-card">
-            <h1 class="welcome-title">22</h1>
-            <p class="welcome-subtitle">un año entero de tu música ✨</p>
-            <div class="letter-seal" onclick="startExperience()">💌</div>
-            <div>
-                <button class="btn-open" onclick="startExperience()">Abrir carta</button>
-            </div>
+        <div class="terminal-box">
+            <div class="glitch-title">SYSTEM_BOOT: v22.0</div>
+            <p>> CARGANDO REGISTROS DE AUDIO...</p>
+            <p>> DETECTANDO RECUERDOS EN MEMORIA...</p>
+            <p>> INICIALIZANDO COMPILACIÓN DE CUMPLEAÑOS...</p>
+            <p style="color: #FFF; margin-top: 10px;">> ESTADO: LISTO PARA LA EJECUCIÓN.</p>
+            <button class="btn-boot" onclick="startExperience()">EJECUTAR_REGALO.EXE</button>
         </div>
     </div>
 
-    <!-- PÁGINA PRINCIPAL -->
-    <main id="main-content">
-        <div class="soft-header">
-            <h2 id="song-title">Cargando melodía...</h2>
+    <!-- REPLAYER DE AUDIO PRINCIPAL -->
+    <main id="main-content" class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">
+                <span>📟</span> PEANUTS_PLAYER_V2.2.EXE
+            </div>
+            <div class="title-bar-controls">
+                <button>_</button>
+                <button>🗖</button>
+                <button onclick="alert('Acceso denegado: Es su cumpleaños.')">X</button>
+            </div>
         </div>
 
-        <div class="aesthetic-grid">
-            <div class="panel-photo">
-                <div class="photo-frame">
-                    <img id="song-img" src="" alt="Momento">
+        <!-- Pantalla LCD Verde Neón para las Letras -->
+        <div class="lcd-display">
+            <div class="lcd-title" id="song-title">INICIALIZANDO...</div>
+            <div class="lcd-lyrics" id="song-lyrics">
+                Cargando base de datos musical...
+            </div>
+        </div>
+
+        <div class="cyber-grid">
+            <!-- Pantalla CRT para las imágenes -->
+            <div class="window">
+                <div class="title-bar">
+                    <div class="title-bar-text">📸 VISUALIZER_MONITOR</div>
+                </div>
+                <div class="photo-window">
+                    <div class="photo-screen">
+                        <img id="song-img" src="" alt="Frame">
+                    </div>
                 </div>
             </div>
-            <div class="panel-lyrics">
-                <div class="lyrics-text" id="song-lyrics">
-                    Cargando versos...
+
+            <!-- Panel de Controles y Playlist de Spotify -->
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="window">
+                    <div class="title-bar">
+                        <div class="title-bar-text">🎛️ AUDIO_DECK</div>
+                    </div>
+                    <div class="audio-controls">
+                        <select id="song-select" class="cyber-select" onchange="changeSong(this.value)">
+                            <!-- Rellenado por JS -->
+                        </select>
+                        <div class="deck-buttons">
+                            <button class="btn-deck" onclick="navigate(-1)">[|◀] PREV</button>
+                            <button class="btn-deck" onclick="navigate(1)">NEXT [▶|]</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="window spotify-window">
+                    <iframe style="border-radius:0px" src="https://spotify.com" width="100%" height="150" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
             </div>
-        </div>
-
-        <div class="controls-container">
-            <div class="selector-wrapper">
-                <select id="song-select" onchange="changeSong(this.value)"></select>
-            </div>
-            <div class="nav-buttons">
-                <button class="btn-nav" onclick="navigate(-1)">Anterior</button>
-                <button class="btn-nav" onclick="navigate(1)">Siguiente</button>
-            </div>
-        </div>
-
-        <div class="spotify-container">
-            <iframe style="border-radius:12px" src="https://spotify.com" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
     </main>
 
     <script>
         const playlistData = [
-            { title: "1. Sanctuary - Joji", lyrics: "«Inglés:\nNot anyone, you're the one\nMore than fun, you're the sanctuary\n'Cause what you want is what I want\nSincerity\n\nEspañol:\nNo cualquiera, eres tú.\nMás que diversión, eres el refugio.\nPorque lo que tú quieres es lo que yo quiero:\nSinceridad.»", photo: "https://unsplash.com" },
-            { title: "2. Baile inolvidable - Bad Bunny", lyrics: "«Mientras uno esté vivo\nuno debe amar lo más que pueda.»", photo: "https://unsplash.com" },
-            { title: "3. White ferrari - Frank Ocean", lyrics: "«Inglés:\nI care for you still, and I will forever\nThat was my part of the deal, honest\nWe got so familiar\n\nEspañol:\nTodavía me importas, y lo haré para siempre.\nEsa era mi parte del trato, de verdad\nNos volvimos tan cercanos.»", photo: "https://unsplash.com" },
-            { title: "4. El tesoro - El mató a un policía motorizado", lyrics: "«Perdón si estoy de nuevo acá\nPensé que habías preguntado por mí\nMe gusta estar de nuevo acá\nAunque no hayas preguntado por mí\nVoy a quedarme un poco acá\nCuidarte siempre a vos en la derrota\nHasta el final, el final»", photo: "https://unsplash.com" },
-            { title: "5. Quiéreme - Latin Mafia / Fred again..", lyrics: "«Puede que no sepa bailar\nY aún así me quedo por ti\nYo no me puedo acostar\nY aún así me acuesto en ti»", photo: "https://unsplash.com" },
-            { title: "6. Te estoy correteando - Latin Mafia", lyrics: "«Cuéntame, ¿qué ha sido de ti?\nExtráñame, te extraño a ti»", photo: "https://unsplash.com" },
-            { title: "7. Godspeed - Frank Ocean", lyrics: "«Inglés:\nWishing you godspeed, glory\nThere will be mountains you won't move\nStill, I'll always be there for you\nHow I do\nI let go of my claim on you\nIt's a free world\nYou'll look down on where you came from sometimes\nBut you'll have this place to call home, always\n\nEspañol:\nTe deseo buen camino y gloria.\nHabrá montañas que no podrás mover;\naun así, siempre estaré ahí para ti.\nEs lo que hago:\nrenuncio a cualquier derecho sobre ti.\nEs un mundo libre.\nA veces mirarás hacia atrás, hacia tus orígenes,\npero siempre tendrás este lugar al que llamar hogar.»", photo: "https://unsplash.com" },
-            { title: "8. Neo roneo - Rusowsky / Latin Mafia", lyrics: "«Quererte hasta que duela\nTodo este corazón caliente, no me sirve la mente\nNunca me ha fallado, siempre ha sido pa' quererte»", photo: "https://unsplash.com" },
-            { title: "9. Otro atardecer - Bad Bunny / The Marías", lyrics: "«Hay mucho de mí que te faltó conocer\nSi la vida me da de nuevo el placer\nVoy a volverte a besar como aquella ve' que el sol se escondió\nMientras la noche llegaba\nNo sé qué sucedió pero me perdí en tu mirada»", photo: "https://unsplash.com" },
+            { title: "01. Sanctuary - Joji", lyrics: "«Inglés:\nNot anyone, you're the one\nMore than fun, you're the sanctuary\n'Cause what you want is what I want\nSincerity\n\nEspañol:\nNo cualquiera, eres tú.\nMás que diversión, eres el refugio.\nPorque lo que tú quieres es lo que yo quiero:\nSinceridad.»", photo: "https://unsplash.com" },
+            { title: "02. Baile inolvidable - Bad Bunny", lyrics: "«Mientras uno esté vivo\nuno debe amar lo más que pueda.»", photo: "https://unsplash.com" },
+            { title: "03. White ferrari - Frank Ocean", lyrics: "«Inglés:\nI care for you still, and I will forever\nThat was my part of the deal, honest\nWe got so familiar\n\nEspañol:\nTodavía me importas, y lo haré para siempre.\nEsa era mi parte del trato, de verdad\nNos volvimos tan cercanos.»", photo: "https://unsplash.com" },
+            { title: "04. El tesoro - El mató a un policía motorizado", lyrics: "«Perdón si estoy de nuevo acá\nPensé que habías preguntado por mí\nMe gusta estar de nuevo acá\nAunque no hayas preguntado por mí\nVoy a quedarme un poco acá\nCuidarte siempre a vos en la derrota\nHasta el final, el final»", photo: "https://unsplash.com" },
+            { title: "05. Quiéreme - Latin Mafia / Fred again..", lyrics: "«Puede que no sepa bailar\nY aún así me quedo por ti\nYo no me puedo costar\nY aún así me acuesto en ti»", photo: "https://unsplash.com" },
+            { title: "06. Te estoy correteando - Latin Mafia", lyrics: "«Cuéntame, ¿qué ha sido de ti?\nExtráñame, te extraño a ti»", photo: "https://unsplash.com" },
+            { title: "07. Godspeed - Frank Ocean", lyrics: "«Inglés:\nWishing you godspeed, glory\nThere will be mountains you won't move\nStill, I'll always be there for you\nHow I do\nI let go of my claim on you\nIt's a free world\nYou'll look down on where you came from sometimes\nBut you'll have this place to call home, always\n\nEspañol:\nTe deseo buen camino y gloria.\nHabrá montañas que no podrás mover;\naun así, siempre estaré ahí para ti.\nEs lo que hago:\nrenuncio a cualquier derecho sobre ti.\nEs un mundo libre.\nA veces mirarás hacia atrás, hacia tus orígenes,\npero siempre tendrás este lugar al que llamar hogar.»", photo: "https://unsplash.com" },
+            { title: "08. Neo roneo - Rusowsky / Latin Mafia", lyrics: "«Quererte hasta que duela\nTodo este corazón caliente, no me sirve la mente\nNunca me ha fallado, siempre ha sido pa' quererte»", photo: "https://unsplash.com" },
+            { title: "09. Otro atardecer - Bad Bunny / The Marías", lyrics: "«Hay mucho de mí que te faltó conocer\nSi la vida me da de nuevo el placer\nVoy a volverte a besar como aquella ve' que el sol se escondió\nMientras la noche llegaba\nNo sé qué sucedió pero me perdí en tu mirada»", photo: "https://unsplash.com" },
             { title: "10. BBY ROMEO - Rusowsky / Ralphie Choo", lyrics: "«Y es que yo no sé lo que tiene\nPero mira cómo me tiene\nNo lo olvido nunca, nunca, nunca\n¿Esa niña qué es lo que tiene?\nPorque mira cómo me tiene\nNo lo olvido nunca, nunca, nunca»", photo: "https://unsplash.com" },
             { title: "11. Si en tu mente estuve - Nsqk", lyrics: "«Cuéntame siquiera si pensaste en lo mismo de siempre\nCuéntame siquiera si soñaste con un campo verde\nQue solo quiero saber\nSi todas las cosas que te prometiste\nYa están por llegar o cuántas ya cumpliste\nY si es que quieres verme»", photo: "https://unsplash.com" },
             { title: "12. Yo no soy celoso - Bad Bunny", lyrics: "«Yo no soy celoso, ¿pero quién e' ese cabrón?\nDime quién e' ese cabrón\nTranquila, no soy psycho\nNo vo'a hacer un papelón, pero\nAuch, mi corazón»", photo: "https://unsplash.com" },
@@ -83,7 +103,7 @@
             { title: "19. 2:12AM - Rauw Alejandro / Latin Mafia", lyrics: "«Te vuelvo a tener, amémonos'\nUn mundo perfecto, inventémoslo y ven\nVen y bésame la boca»", photo: "https://unsplash.com" },
             { title: "20. Patadas de ahogado - Latin Mafia / Humbe", lyrics: "«Porque yo ya sabía a lo que iba\nQuerer comprarnos un terreno y construirnos la vida\nPorque contigo lo sabía\nQue tú y yo vamos por la milla\nY que siempre voy a querer saber si va bien todo en tu día\n¿Qué tal va tu día?\nEs lo que me importa, mi vida»", photo: "https://unsplash.com" },
             { title: "21. Se fue la luz - Latin Mafia / Jesse Baez", lyrics: "«Se fue la luz, se fue la luz\nY alcanzó a ver sus ojos en mi reflejo\nSe fue la luz, se fue la luz\nY me está cantando canciones en el pecho»", photo: "https://unsplash.com" },
-            { title: "22. ESCENCIA - Humbe", lyrics: "«Cuando me faltó, me diste razón\n¿Qué va a pasar el día que ya no te tenga?\nCuando el mundo ya no siga y se detenga\nCuando en la gloria solo piense en tu Physen\nPorque perderte es vivir sin mi propia esencia»", photo: "https://unsplash.com" }
+            { title: "22. ESCENCIA - Humbe", lyrics: "«Cuando me faltó, me diste razón\n¿Qué va a pasar el día que ya no te tenga?\nCuando el mundo ya no siga y se detenga\nCuando en la gloria solo piense en tu ausencia\nPorque perderte es vivir sin mi propia esencia»", photo: "https://unsplash.com" }
         ];
 
         let currentIndex = 0;
@@ -101,16 +121,20 @@
         }
         function changeSong(index) { updateSongDisplay(parseInt(index)); }
         function navigate(direction) { let newIndex = currentIndex + direction; if (newIndex >= 0 && newIndex < playlistData.length) { updateSongDisplay(newIndex); } }
-        function startExperience() { document.getElementById('welcome-screen').classList.add('hidden'); initConfetti(); }
+        
+        function startExperience() { 
+            document.getElementById('welcome-screen').classList.add('hidden'); 
+            initConfetti(); 
+        }
 
         const canvas = document.getElementById('confetti-canvas'); const ctx = canvas.getContext('2d'); let confetti = [];
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
         function initConfetti() {
-            const colors = ['#FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA'];
-            for (let i = 0; i < 80; i++) {
-                confetti.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, r: Math.random() * 5 + 3, d: Math.random() * canvas.height, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.05 + 0.01, tiltAngle: 0 });
+            const colors = ['#39FF14', '#1084d0', '#FFFFFF', '#808080', '#000080'];
+            for (let i = 0; i < 70; i++) {
+                confetti.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, r: Math.random() * 4 + 2, d: Math.random() * canvas.height, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.05, tiltAngle: 0 });
             }
             animateConfetti();
         }
@@ -118,7 +142,7 @@
         function animateConfetti() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); let active = false;
             confetti.forEach((p, index) => {
-                p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 2 + p.r / 2) / 2; p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - index / 3) * 12;
+                p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2; p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - index / 3) * 10;
                 if (p.y <= canvas.height) { active = true; }
                 ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color; ctx.moveTo(p.x + p.tilt + p.r / 2, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2); ctx.stroke();
             });
