@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>22 ✨</title>
-    <!-- Contador de visitas invisible (No altera el diseño) -->
+    <!-- Contador de visitas invisible -->
     <img src="https://counter.dev" alt="" style="display:none; visibility:hidden; width:0; height:0; position:absolute;">
     
     <!-- Tipografías Estilo Garabato de Google Fonts -->
@@ -14,10 +14,10 @@
     
     <style>
         :root {
-            --bg-cream: #FDFBF7; /* Fondo papel de ilustración */
-            --accent-woodstock: #FFDE4D; /* Amarillo Woodstock suave */
-            --accent-snoopy: #FF6B6B; /* Rojo tierno */
-            --accent-spotify: #1DB954; /* Verde oficial de Spotify */
+            --bg-cream: #FDFBF7; 
+            --accent-woodstock: #FFDE4D; 
+            --accent-snoopy: #FF6B6B; 
+            --accent-spotify: #1DB954; 
             --text-dark: #1A1A1A;
             --box-bg: #FFFFFF;
             --hand-border: 3px solid #1A1A1A;
@@ -91,7 +91,7 @@
         .btn-nav { flex: 1; font-family: 'Fredoka', sans-serif; background: var(--box-bg); color: var(--text-dark); border: var(--hand-border); padding: 10px; font-size: 14px; font-weight: 600; border-radius: 12px; cursor: pointer; box-shadow: 3px 3px 0px #1A1A1A; transition: all 0.1s; }
         .btn-nav:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #1A1A1A; }
 
-        /* NUEVO BOTÓN DE ENLACE DIRECTO A SPOTIFY */
+        /* BOTÓN CON TU ENLACE ACTUALIZADO */
         .spotify-link-button {
             display: flex;
             align-items: center;
@@ -124,7 +124,6 @@
 <body>
     <canvas id="confetti-canvas"></canvas>
     
-    <!-- PRESENTACIÓN DOODLE -->
     <div id="welcome-screen">
         <div class="welcome-card">
             <div class="welcome-poem">Todos los días todo el día me puedo sentir bien
@@ -138,7 +137,6 @@ Todos los días todo el día eres tú</div>
         </div>
     </div>
 
-    <!-- CONTENIDO WEB -->
     <main id="main-content">
         <div class="player-card">
             <div class="photo-container"><img id="song-img" src="" alt="Momento"></div>
@@ -155,14 +153,14 @@ Todos los días todo el día eres tú</div>
             </div>
         </div>
 
-        <!-- BOTÓN DIRECTO QUE REDIRECCIONA A TU PLAYLIST -->
-        <a href="https://spotify.com" target="_blank" class="spotify-link-button">
+        <!-- ENLACE DE TU PLAYLIST CONFIGURADO -->
+        <a href="https://open.spotify.com/playlist/5dfAJ9jPW6btHq2JGfM57Z?si=tJxk2MY9QSemvOtFNKi7yA" target="_blank" class="spotify-link-button">
             🔊 Escuchar Playlist Completa en Spotify 🎧
         </a>
     </main>
 
     <script src="playlist.js"></script>
-      <script>
+     <script>
         let currentIndex = 0;
         const selectElement = document.getElementById('song-select');
         
