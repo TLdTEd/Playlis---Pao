@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>22 ✨</title>
-    <!-- Tipografías Estilo Garabato e Ilustración de Google Fonts -->
+    <!-- Contador de visitas invisible (No altera el diseño) -->
+    <img src="https://counter.dev" alt="" style="display:none; visibility:hidden; width:0; height:0; position:absolute;">
+    
+    <!-- Tipografías Estilo Garabato de Google Fonts -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Fredoka:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
@@ -14,17 +17,14 @@
             --bg-cream: #FDFBF7; /* Fondo papel de ilustración */
             --accent-woodstock: #FFDE4D; /* Amarillo Woodstock suave */
             --accent-snoopy: #FF6B6B; /* Rojo tierno */
+            --accent-spotify: #1DB954; /* Verde oficial de Spotify */
             --text-dark: #1A1A1A;
             --box-bg: #FFFFFF;
             --hand-border: 3px solid #1A1A1A;
             --doodle-shadow: 5px 5px 0px #1A1A1A;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Fredoka', sans-serif;
@@ -38,7 +38,7 @@
             padding: 10px;
         }
 
-        /* --- BIENVENIDA DOODLE POÉTIQUE --- */
+        /* --- BIENVENIDA --- */
         #welcome-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -50,191 +50,75 @@
         #welcome-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
         .welcome-card {
-            background: var(--box-bg);
-            padding: 40px 25px;
-            border: var(--hand-border);
-            border-radius: 20px;
-            box-shadow: var(--doodle-shadow);
-            max-width: 440px;
-            width: 100%;
-            text-align: center;
-            position: relative;
+            background: var(--box-bg); padding: 40px 25px; border: var(--hand-border);
+            border-radius: 20px; box-shadow: var(--doodle-shadow); max-width: 440px;
+            width: 100%; text-align: center; position: relative;
         }
 
-        /* Decoración de estrellas dibujadas en las esquinas */
         .welcome-card::before { content: '✨'; position: absolute; top: 15px; left: 15px; font-size: 20px; }
         .welcome-card::after { content: '🐾'; position: absolute; bottom: 15px; right: 15px; font-size: 20px; }
 
-        .welcome-poem {
-            font-family: 'Patrick Hand', cursive;
-            font-size: 22px;
-            line-height: 1.6;
-            color: var(--text-dark);
-            margin-bottom: 25px;
-            white-space: pre-line;
-        }
-
-        .welcome-birthday {
-            font-size: 20px;
-            font-weight: 600;
-            background-color: var(--accent-woodstock);
-            padding: 6px 15px;
-            border: var(--hand-border);
-            border-radius: 12px;
-            display: inline-block;
-            margin-bottom: 30px;
-            transform: rotate(-1deg);
-        }
+        .welcome-poem { font-family: 'Patrick Hand', cursive; font-size: 22px; line-height: 1.6; color: var(--text-dark); margin-bottom: 25px; white-space: pre-line; }
+        .welcome-birthday { font-size: 20px; font-weight: 600; background-color: var(--accent-woodstock); padding: 6px 15px; border: var(--hand-border); border-radius: 12px; display: inline-block; margin-bottom: 30px; transform: rotate(-1deg); }
 
         .btn-open {
-            font-family: 'Fredoka', sans-serif;
-            background-color: var(--accent-snoopy);
-            color: white;
-            border: var(--hand-border);
-            padding: 12px 32px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px #1A1A1A;
-            transition: transform 0.1s, box-shadow 0.1s;
-            text-transform: uppercase;
+            font-family: 'Fredoka', sans-serif; background-color: var(--accent-snoopy); color: white;
+            border: var(--hand-border); padding: 12px 32px; font-size: 15px; font-weight: 600;
+            border-radius: 50px; cursor: pointer; box-shadow: 3px 3px 0px #1A1A1A; transition: all 0.1s; text-transform: uppercase;
         }
-
-        .btn-open:active {
-            transform: translate(3px, 3px);
-            box-shadow: 0px 0px 0px #1A1A1A;
-        }
+        .btn-open:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px #1A1A1A; }
 
         /* --- REPRODUCTOR PRINCIPAL --- */
-        #main-content {
-            max-width: 460px;
-            width: 100%;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
+        #main-content { max-width: 460px; width: 100%; padding: 10px; display: flex; flex-direction: column; gap: 20px; }
+        
         .player-card {
-            background: var(--box-bg);
-            border: var(--hand-border);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: var(--doodle-shadow);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            position: relative;
+            background: var(--box-bg); border: var(--hand-border); border-radius: 24px;
+            padding: 24px; box-shadow: var(--doodle-shadow); display: flex; flex-direction: column; gap: 15px;
         }
 
-        .photo-container {
+        .photo-container { width: 100%; height: 280px; border: var(--hand-border); border-radius: 16px; overflow: hidden; background-color: #FAF6F0; }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .info-container { text-align: center; padding: 5px 0; }
+        .song-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; display: inline-block; border-bottom: 2px dashed var(--text-dark); padding-bottom: 2px; }
+        
+        .lyrics-box { font-family: 'Patrick Hand', cursive; font-size: 22px; line-height: 1.5; color: #333333; background: #FDFDFD; border: 2px dashed #CCCCCC; padding: 15px; border-radius: 12px; min-height: 110px; white-space: pre-line; }
+
+        .controls-box { display: flex; flex-direction: column; gap: 12px; }
+        .modern-select { width: 100%; font-family: 'Fredoka', sans-serif; background: var(--box-bg); color: var(--text-dark); border: var(--hand-border); padding: 10px 15px; border-radius: 12px; font-size: 14px; font-weight: 600; outline: none; cursor: pointer; text-align: center; }
+        
+        .nav-buttons { display: flex; justify-content: space-between; gap: 12px; }
+        .btn-nav { flex: 1; font-family: 'Fredoka', sans-serif; background: var(--box-bg); color: var(--text-dark); border: var(--hand-border); padding: 10px; font-size: 14px; font-weight: 600; border-radius: 12px; cursor: pointer; box-shadow: 3px 3px 0px #1A1A1A; transition: all 0.1s; }
+        .btn-nav:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #1A1A1A; }
+
+        /* NUEVO BOTÓN DE ENLACE DIRECTO A SPOTIFY */
+        .spotify-link-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             width: 100%;
-            height: 280px;
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--accent-spotify);
+            color: #FFFFFF;
             border: var(--hand-border);
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
             border-radius: 16px;
-            overflow: hidden;
-            background-color: #FAF6F0;
-        }
-
-        .photo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .info-container {
-            text-align: center;
-            padding: 5px 0;
-        }
-
-        .song-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: inline-block;
-            border-bottom: 2px dashed var(--text-dark);
-            padding-bottom: 2px;
-        }
-
-        .lyrics-box {
-            font-family: 'Patrick Hand', cursive;
-            font-size: 22px;
-            line-height: 1.5;
-            color: #333333;
-            background: #FDFDFD;
-            border: 2px dashed #CCCCCC;
-            padding: 15px;
-            border-radius: 12px;
-            min-height: 110px;
-            white-space: pre-line;
-        }
-
-        /* CONTROLES DOODLE */
-        .controls-box {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .modern-select {
-            width: 100%;
-            font-family: 'Fredoka', sans-serif;
-            background: var(--box-bg);
-            color: var(--text-dark);
-            border: var(--hand-border);
-            padding: 10px 15px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            outline: none;
             cursor: pointer;
-            text-align: center;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .btn-nav {
-            flex: 1;
-            font-family: 'Fredoka', sans-serif;
-            background: var(--box-bg);
-            color: var(--text-dark);
-            border: var(--hand-border);
-            padding: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px #1A1A1A;
+            box-shadow: var(--doodle-shadow);
+            text-decoration: none;
             transition: all 0.1s;
+            text-align: center;
         }
 
-        .btn-nav:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #1A1A1A;
+        .spotify-link-button:active {
+            transform: translate(3px, 3px);
+            box-shadow: 2px 2px 0px #1A1A1A;
         }
 
-        /* WIDGET SPOTIFY */
-        .spotify-container {
-            width: 100%;
-            border: var(--hand-border);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--doodle-shadow);
-            background: #000;
-        }
-
-        .spotify-container iframe { display: block; }
-
-        #confetti-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 999;
-        }
+        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
     </style>
 </head>
 <body>
@@ -271,18 +155,17 @@ Todos los días todo el día eres tú</div>
             </div>
         </div>
 
-        <div class="spotify-container">
-            <iframe style="border-radius:12px" src="https://spotify.com" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
+        <!-- BOTÓN DIRECTO QUE REDIRECCIONA A TU PLAYLIST -->
+        <a href="https://spotify.com" target="_blank" class="spotify-link-button">
+            🔊 Escuchar Playlist Completa en Spotify 🎧
+        </a>
     </main>
 
-    <!-- Importación de tu archivo externo -->
     <script src="playlist.js"></script>
       <script>
         let currentIndex = 0;
         const selectElement = document.getElementById('song-select');
         
-        // Cargar menú desplegable desde el archivo JS externo
         playlistData.forEach((song, idx) => {
             let option = document.createElement('option');
             option.value = idx;
@@ -313,7 +196,6 @@ Todos los días todo el día eres tú</div>
             initConfetti();
         }
 
-        // CONFETI ESTILO DOODLE (Colores Peanuts)
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
         let confetti = [];
