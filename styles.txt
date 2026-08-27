@@ -1,0 +1,262 @@
+:root {
+    --bg-gradient: linear-gradient(135deg, #FFF5F5 0%, #FFF0F5 50%, #F5F0FF 100%); /* Fondo Soft Pastel */
+    --accent-soft: #FFB7B2; /* Rosa pastel Coquette */
+    --accent-dark: #A78BFA; /* Lavanda suave para detalles */
+    --box-bg: rgba(255, 255, 255, 0.75);
+    --text-main: #4A4A4A;
+    --text-muted: #7E7E7E;
+    --shadow-soft: 0 10px 30px rgba(255, 183, 178, 0.2);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* --- PANTALLA DE BIENVENIDA (CARTA COQUETTE) --- */
+#welcome-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: var(--bg-gradient);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 1000; transition: opacity 1s ease, visibility 1s; padding: 20px;
+}
+
+#welcome-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.welcome-card {
+    background: #FFFFFF;
+    padding: 50px 35px;
+    border-radius: 24px;
+    box-shadow: var(--shadow-soft);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid rgba(255, 183, 178, 0.3);
+    position: relative;
+}
+
+.welcome-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 400;
+    color: var(--accent-soft);
+    line-height: 1;
+    margin-bottom: 5px;
+    letter-spacing: -2px;
+}
+
+.welcome-subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 35px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.letter-seal {
+    font-size: 55px;
+    margin-bottom: 35px;
+    display: inline-block;
+    animation: float 3s infinite ease-in-out;
+    cursor: pointer;
+}
+
+.btn-open {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    border: 1px solid rgba(255, 183, 178, 0.5);
+    padding: 14px 35px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 183, 178, 0.3);
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.btn-open:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 183, 178, 0.5);
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+#main-content {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.soft-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.soft-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-main);
+}
+
+/* Grid Estético */
+.aesthetic-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 35px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .aesthetic-grid { grid-template-columns: 1fr; gap: 25px; }
+}
+
+/* Contenedor de la Foto */
+.panel-photo {
+    background: #FFFFFF;
+    padding: 16px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-frame {
+    width: 100%;
+    height: 340px;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    background-color: #FAF8F6;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Contenedor de la Letra */
+.panel-lyrics {
+    background: var(--box-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 35px 25px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 340px;
+    text-align: center;
+}
+
+.lyrics-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--text-main);
+    white-space: pre-line;
+}
+
+/* --- BOTONES Y SELECTORES SOFT --- */
+.controls-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.selector-wrapper {
+    width: 100%;
+    max-width: 450px;
+}
+
+select {
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: var(--text-main);
+    padding: 12px 20px;
+    border: 1px solid rgba(255, 183, 178, 0.4);
+    border-radius: 50px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    outline: none;
+    box-shadow: var(--shadow-soft);
+    appearance: none;
+    -webkit-appearance: none;
+    text-align: center;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-nav {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(255, 183, 178, 0.3);
+    padding: 10px 25px;
+    font-size: 14px;
+    color: var(--text-muted);
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.2s ease;
+}
+
+.btn-nav:hover {
+    color: var(--text-main);
+    border-color: var(--accent-soft);
+    transform: translateY(-1px);
+}
+
+/* --- REPRODUCTOR DE SPOTIFY --- */
+.spotify-container {
+    width: 100%;
+    max-width: 450px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.spotify-container iframe {
+    display: block;
+}
+
+#confetti-canvas {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 999;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(3deg); }
+}
