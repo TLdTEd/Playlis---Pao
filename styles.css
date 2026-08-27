@@ -1,12 +1,10 @@
 :root {
-    --bg-cyber: #0D0E15; /* Negro profundo del espacio */
-    --win-gray: #C0C0C0; /* Gris clásico de ventanas de los 90s */
-    --win-light: #FFFFFF;
-    --win-dark: #808080;
-    --neon-green: #39FF14; /* Monitor de fósforo verde */
-    --neon-dark-green: #0A3205;
-    --text-dark: #000000;
-    --cyber-blue: #000080; /* Azul barra de título clásica */
+    --bg-main: #121212; /* Negro Spotify */
+    --bg-card: #181818; /* Gris oscuro para paneles */
+    --accent: #1DB954;  /* Verde Spotify */
+    --text-main: #FFFFFF;
+    --text-muted: #B3B3B3;
+    --shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
 
 * {
@@ -16,246 +14,175 @@
 }
 
 body {
-    font-family: 'Courier New', Courier, monospace;
-    background-color: var(--bg-cyber);
-    background-image: 
-        linear-gradient(rgba(18, 24, 38, 0.95), rgba(18, 24, 38, 0.95)),
-        linear-gradient(90deg, rgba(57, 255, 20, 0.05) 1px, transparent 1px),
-        linear-gradient(rgba(57, 255, 20, 0.05) 1px, transparent 1px);
-    background-size: 100% 100%, 20px 20px, 20px 20px; /* Cuadrícula cibernética retro */
-    color: var(--text-dark);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
     min-height: 100vh;
-    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
 }
 
-/* --- ESTILO VENTANA RETRO (WIN95/WINAMP) --- */
-.window {
-    background: var(--win-gray);
-    border-top: 2px solid var(--win-light);
-    border-left: 2px solid var(--win-light);
-    border-right: 2px solid var(--win-dark);
-    border-bottom: 2px solid var(--win-dark);
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-    padding: 4px;
-}
-
-.title-bar {
-    background: linear-gradient(90deg, var(--cyber-blue), #1084d0);
-    color: white;
-    padding: 4px 8px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-.title-bar-text {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.title-bar-controls button {
-    width: 16px;
-    height: 14px;
-    font-size: 9px;
-    font-weight: bold;
-    background: var(--win-gray);
-    border-top: 1px solid var(--win-light);
-    border-left: 1px solid var(--win-light);
-    border-right: 1px solid var(--win-dark);
-    border-bottom: 1px solid var(--win-dark);
-    cursor: pointer;
-}
-
-/* --- PANTALLA DE BIENVENIDA (SISTEMA DE ARRANQUE) --- */
+/* --- BIENVENIDA MODERNA --- */
 #welcome-screen {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    background-color: #000000;
-    color: var(--neon-green);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    font-family: 'Courier New', monospace;
-    padding: 20px;
-    transition: opacity 0.5s ease, visibility 0.5s;
+    background-color: var(--bg-main);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 1000; transition: opacity 0.6s ease, visibility 0.6s; padding: 20px;
 }
 
 #welcome-screen.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+    opacity: 0; visibility: hidden; pointer-events: none;
 }
 
-.terminal-box {
-    max-width: 500px;
+.welcome-card {
+    background: var(--bg-card);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    max-width: 400px;
     width: 100%;
-    text-align: left;
-    line-height: 1.5;
+    text-align: center;
 }
 
-.glitch-title {
-    font-size: 40px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-shadow: 0 0 10px var(--neon-green);
+.welcome-title {
+    font-size: 64px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 5px;
 }
 
-.btn-boot {
-    background: #000;
-    color: var(--neon-green);
-    border: 2px solid var(--neon-green);
-    padding: 10px 20px;
-    font-family: 'Courier New', monospace;
-    font-size: 16px;
+.welcome-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+.btn-open {
+    background-color: var(--accent);
+    color: #000000;
+    border: none;
+    padding: 14px 32px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 50px;
     cursor: pointer;
-    margin-top: 30px;
-    box-shadow: 0 0 8px var(--neon-green);
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.btn-boot:hover {
-    background: var(--neon-green);
-    color: #000;
-    box-shadow: 0 0 15px var(--neon-green);
+.btn-open:hover {
+    transform: scale(1.05);
 }
 
 /* --- REPRODUCTOR PRINCIPAL --- */
 #main-content {
-    max-width: 800px;
+    max-width: 480px;
     width: 100%;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
-/* Pantalla LCD Verde */
-.lcd-display {
-    background-color: #000000;
-    border: 2px solid var(--win-dark);
-    border-top-color: #404040;
-    border-left-color: #404040;
-    padding: 15px;
-    min-height: 200px;
+.player-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    box-shadow: inset 0px 0px 10px rgba(57,255,20,0.5);
-    margin-bottom: 10px;
+    gap: 20px;
 }
 
-.lcd-title {
-    color: var(--neon-green);
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    text-shadow: 0 0 3px var(--neon-green);
-}
-
-.lcd-lyrics {
-    color: #8FFF8F;
-    font-size: 15px;
-    line-height: 1.5;
-    white-space: pre-line;
-    max-height: 150px;
-    overflow-y: auto;
-}
-
-/* Panel Central de Contenidos */
-.cyber-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-@media (max-width: 768px) {
-    .cyber-grid { grid-template-columns: 1fr; }
-}
-
-/* Visor de Fotos de Matriz */
-.photo-window {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    background: #202020;
-    border: 2px solid var(--win-dark);
-}
-
-.photo-screen {
+.photo-container {
     width: 100%;
-    height: 280px;
+    height: 300px;
+    border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #444;
+    box-shadow: var(--shadow);
 }
 
-.photo-screen img {
+.photo-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(0.8) contrast(1.2); /* Aspecto cámara digital antigua */
 }
 
-/* --- CONTROLES DE REPRODUCCIÓN (ESTILO CASSETTE/STEREO) --- */
-.audio-controls {
+.info-container {
+    text-align: left;
+}
+
+.song-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.lyrics-box {
+    margin-top: 15px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    background: rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 8px;
+    min-height: 120px;
+    white-space: pre-line;
+}
+
+/* CONTROLES */
+.controls-box {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    background: var(--win-gray);
-    padding: 10px;
+    gap: 12px;
 }
 
-.deck-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.btn-deck {
-    background: var(--win-gray);
-    border-top: 2px solid var(--win-light);
-    border-left: 2px solid var(--win-light);
-    border-right: 2px solid var(--win-dark);
-    border-bottom: 2px solid var(--win-dark);
-    padding: 8px 16px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 13px;
-    color: #000;
-}
-
-.btn-deck:active {
-    border-top: 2px solid var(--win-dark);
-    border-left: 2px solid var(--win-dark);
-    border-right: 2px solid var(--win-light);
-    border-bottom: 2px solid var(--win-light);
-    padding-top: 9px; padding-left: 17px; padding-bottom: 7px; padding-right: 15px;
-}
-
-.cyber-select {
+.modern-select {
     width: 100%;
-    background: #FFF;
-    border: 2px solid var(--win-dark);
-    padding: 6px;
-    font-family: monospace;
-    font-weight: bold;
+    background: #282828;
+    color: var(--text-main);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 14px;
     outline: none;
+    cursor: pointer;
 }
 
-/* Contenedor del Widget */
-.spotify-window {
-    background: #000000 !important;
-    padding: 0px;
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.btn-nav {
+    flex: 1;
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--text-muted);
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    border-color: var(--text-main);
+    background: rgba(255,255,255,0.05);
+}
+
+.spotify-container {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
 }
 
 #confetti-canvas {
