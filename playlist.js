@@ -67,12 +67,12 @@ const playlistData = [
     {
         title: "14. Continuo atardecer - Latin Mafia",
         lyrics: "Esa niña siempre luce bien\nAprendió a sentirse siempre como un diez\nNo le tiene miedo a lo que fue ayer\nYeah, y si le tiene miedo\nNo importa, tiene tiempo pa' entenderlo\nSus cicatrices se volvieron lienzos\nEn cada herida se dio un beso\nAhora el espejo la adora\nSiempre se ve mona",
-        photo: "continuoatardecer.png"
+        photo: "Continuoatardecer.png"
     },
     {
         title: "15. Chinita linda - Alvaro Diaz / Rawayana",
         lyrics: "Dime a ver, chinita linda",
-        photo: "chinitalinda.png"
+        photo: "Felicilandia.png"
     },
     {
         title: "16. Miau - Young Cister",
@@ -82,12 +82,12 @@ const playlistData = [
     {
         title: "17. Te lo prometo - Humbe",
         lyrics: "Quiero acordarme y regresar a ese lugar\nVolver a abrazarte hasta llorar\nY nunca más volver a soltarte\nY siempre aferrarme a nunca volver a olvidarte",
-        photo: "teloprometo.png"
+        photo: "escencia.png"
     },
     {
         title: "18. YOKO - Alvaro Diaz",
         lyrics: "Si tú me quisiste cuando ni yo me quería\nQue tú me quisiste cuando ni yo me quería",
-        photo: "yoko.png"
+        photo: "sayonara.png"
     },
     {
         title: "19. 2:12AM - Rauw Alejandro / Latin Mafia",
@@ -107,6 +107,6 @@ const playlistData = [
     {
         title: "22. ESCENCIA - Humbe",
         lyrics: "Cuando me faltó, me diste razón\n¿Qué va a pasar el día que ya no te tenga?\nCuando el mundo ya no siga y se detenga\nCuando en la gloria solo piense en tu ausencia\nPorque perderte es vivir sin mi propia esencia",
-        photo: "esencia.png"
+        photo: "escencia.png"
     }
 ];
