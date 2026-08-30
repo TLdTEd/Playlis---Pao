@@ -133,12 +133,9 @@
         <div class="welcome-card">
             <div id="puzzle-instruction" class="welcome-instructions">🧩 Ordena la foto para abrir tu regalo...</div>
             
-            <!-- CAJA TEMPORIZADOR -->
             <div id="timer-box-div" class="timer-box">
                 <span>⏱️ Tiempo restante: <b id="timer-count">60</b>s</span>
-                <div class="timer-bar-bg">
-                    <div id="timer-bar" class="timer-bar-fill"></div>
-                </div>
+                <div class="timer-bar-bg"><div id="timer-bar" class="timer-bar-fill"></div></div>
             </div>
 
             <div id="puzzle-helpers-div" class="puzzle-helpers">
@@ -149,19 +146,15 @@
             <div id="puzzle-guide"><img src="puzzle.png" alt="Guía"></div>
             <div id="puzzle-container"></div>
 
-            <!-- Contenido oculto que se libera al ganar o terminar tiempo -->
             <div class="welcome-poem" id="revealed-poem">Todos los días todo el día me puedo sentir bien
 Todos los días todo el día me puedo sentir terrible
 Todos los días todo el día te extraño
 Todos los días todo el día eres tú</div>
             <div class="welcome-birthday" id="revealed-birthday">Felices 22 años de vida 🐾</div>
-            <div>
-                <button class="btn-open" id="revealed-btn" onclick="startExperience()">Entrar al Regalo ✨</button>
-            </div>
+            <div><button class="btn-open" id="revealed-btn" onclick="startExperience()">Entrar al Regalo ✨</button></div>
         </div>
     </div>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main id="main-content">
         <div class="player-card">
             <div class="photo-container"><img id="song-img" src="" alt="Momento"></div>
@@ -177,25 +170,18 @@ Todos los días todo el día eres tú</div>
                 </div>
             </div>
         </div>
-
         <a href="https://spotify.com" target="_blank" class="spotify-link-button">
             🔊 Escuchar Playlist Completa en Spotify 🎧
         </a>
     </main>
 
-    <!-- Vinculación limpia con tus otros 2 archivos separados -->
     <script src="playlist.js"></script>
-    <script src="puzzle.js"></script>
-    
     <script>
-        let currentIndex = 0;
-        const selectElement = document.getElementById('song-select');
-        const currentAudio = new Audio();
-        currentAudio.loop = true;
+        let currentIndex = 0; const selectElement = document.getElementById('song-select');
+        const currentAudio = new Audio(); currentAudio.loop = true;
 
         playlistData.forEach((song, idx) => {
-            let option = document.createElement('option');
-            option.value = idx; option.textContent = song.title; selectElement.appendChild(option);
+            let option = document.createElement('option'); option.value = idx; option.textContent = song.title; selectElement.appendChild(option);
         });
 
         function updateSongDisplay(index, playAudio = false) {
@@ -204,30 +190,102 @@ Todos los días todo el día eres tú</div>
             document.getElementById('song-lyrics').textContent = song.lyrics;
             document.getElementById('song-img').src = song.photo;
             document.getElementById('song-select').value = index;
-
             if (playAudio) {
                 currentAudio.pause(); currentAudio.src = song.audio; currentAudio.load();
-                currentAudio.play().catch(err => console.log("Audio listo para interacción."));
+                currentAudio.play().catch(err => console.log("Audio listo."));
             }
         }
-
         function changeSong(index) { updateSongDisplay(parseInt(index), true); }
         function navigate(direction) { let newIndex = currentIndex + direction; if (newIndex >= 0 && newIndex < playlistData.length) { updateSongDisplay(newIndex, true); } }
         function startExperience() { document.getElementById('welcome-screen').classList.add('hidden'); initConfetti(); updateSongDisplay(0, true); }
+
+        // --- INTERACTIVIDAD SEGURO DEL ROMPECABEZAS ---
+        const puzzleContainer = document.getElementById('puzzle-container');
+        let currentOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        let showNumbersState = false; let gameActive = true; let timeLeft = 60; let timerInterval;
+
+        function shufflePuzzle() {
+            do {
+                for (let i = currentOrder.length - 2; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    let temp = currentOrder[i]; currentOrder[i] = currentOrder[j]; currentOrder[j] = temp;
+                }
+            } while (checkWin());
+        }
+
+        function renderPuzzle() {
+            puzzleContainer.innerHTML = '';
+            currentOrder.forEach((pieceIdx, pos) => {
+                const piece = document.createElement('div');
+                if (pieceIdx === 8) {
+                    piece.className = 'puzzle-piece empty';
+                } else {
+                    piece.className = 'puzzle-piece';
+                    const row = Math.floor(pieceIdx / 3), col = pieceIdx % 3;
+                    piece.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+                    const numTag = document.createElement('span');
+                    numTag.className = 'piece-number'; numTag.textContent = pieceIdx + 1;
+                    if (showNumbersState) numTag.style.display = 'block';
+                    piece.appendChild(numTag);
+                    if (gameActive) piece.addEventListener('click', function() { movePiece(pos); });
+                }
+                puzzleContainer.appendChild(piece);
+            });
+        }
+
+        function movePiece(pos) {
+            if (!gameActive) return;
+            const emptyPos = currentOrder.indexOf(8);
+            const pRow = Math.floor(pos / 3), pCol = pos % 3;
+            const eRow = Math.floor(emptyPos / 3), eCol = emptyPos % 3;
+            if ((Math.abs(pRow - eRow) + Math.abs(pCol - eCol)) === 1) {
+                let temp = currentOrder[pos]; currentOrder[pos] = currentOrder[emptyPos]; currentOrder[emptyPos] = temp;
+                renderPuzzle();
+                if (checkWin()) { clearInterval(timerInterval); handleWin(true); }
+            }
+        }
+
+        function checkWin() { return currentOrder.every((val, i) => val === i); }
+
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--; document.getElementById('timer-count').textContent = timeLeft;
+                document.getElementById('timer-bar').style.width = ((timeLeft / 60) * 100) + '%';
+                if (timeLeft <= 0) { clearInterval(timerInterval); handleWin(false); }
+            }, 1000);
+        }
+
+        function toggleNumbers() {
+            showNumbersState = !showNumbersState;
+            document.querySelectorAll('.piece-number').forEach(tag => tag.style.display = showNumbersState ? 'block' : 'none');
+        }
+        function showGuide(visible) { document.getElementById('puzzle-guide').style.display = visible ? 'block' : 'none'; }
+
+        function handleWin(didWin) {
+            gameActive = false; currentOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8]; renderPuzzle();
+            const emptyPiece = document.querySelector('.puzzle-piece.empty');
+            if (emptyPiece) { emptyPiece.style.backgroundImage = "url('puzzle.png')"; emptyPiece.style.backgroundPosition = "-200px -200px"; emptyPiece.classList.remove('empty'); }
+            document.getElementById('puzzle-helpers-div').style.display = 'none';
+            document.getElementById('timer-box-div').style.display = 'none';
+            document.getElementById('puzzle-guide').style.display = 'none';
+            document.getElementById('puzzle-instruction').textContent = didWin ? "🎉 ¡Rompecabezas completado! ❤️" : "⏰ ¡Se acabó el tiempo! 🐾";
+            document.getElementById('revealed-btn').textContent = didWin ? "Entrar al Regalo ✨" : "Casi, continuar de todos modos 🐾";
+            document.getElementById('revealed-poem').style.display = 'block';
+            document.getElementById('revealed-birthday').style.display = 'inline-block';
+            document.getElementById('revealed-btn').style.display = 'block';
+        }
+
+        shufflePuzzle(); renderPuzzle(); startTimer();
 
         // CONFETI
         const canvas = document.getElementById('confetti-canvas'); const ctx = canvas.getContext('2d'); let confetti = [];
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeCanvas); resizeCanvas();
-
         function initConfetti() {
             const colors = ['#FFDE4D', '#FF6B6B', '#1A1A1A', '#6FA8DC', '#FFFFFF'];
-            for (let i = 0; i < 60; i++) {
-                confetti.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, r: Math.random() * 5 + 3, d: Math.random() * canvas.height, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.05, tiltAngle: 0 });
-            }
+            for (let i = 0; i < 60; i++) { confetti.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height, r: Math.random() * 5 + 3, d: Math.random() * canvas.height, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.05, tiltAngle: 0 }); }
             animateConfetti();
         }
-
         function animateConfetti() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); let active = false;
             confetti.forEach((p, index) => {
@@ -237,7 +295,6 @@ Todos los días todo el día eres tú</div>
             });
             if (active) requestAnimationFrame(animateConfetti); else ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
-
         updateSongDisplay(0, false);
     </script>
 </body>
