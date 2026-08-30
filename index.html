@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>22 ✨</title>
-    <!-- Contador de visitas invisible -->
+    <!-- Contador de visitas invisible (No altera el diseño) -->
     <img src="https://counter.dev" alt="" style="display:none; visibility:hidden; width:0; height:0; position:absolute;">
     
     <!-- Tipografías Estilo Garabato de Google Fonts -->
@@ -14,10 +14,10 @@
     
     <style>
         :root {
-            --bg-cream: #FDFBF7; 
-            --accent-woodstock: #FFDE4D; 
-            --accent-snoopy: #FF6B6B; 
-            --accent-spotify: #1DB954; 
+            --bg-cream: #FDFBF7; /* Fondo papel de ilustración */
+            --accent-woodstock: #FFDE4D; /* Amarillo Woodstock suave */
+            --accent-snoopy: #FF6B6B; /* Rojo tierno */
+            --accent-spotify: #1DB954; /* Verde oficial de Spotify */
             --text-dark: #1A1A1A;
             --box-bg: #FFFFFF;
             --hand-border: 3px solid #1A1A1A;
@@ -170,7 +170,8 @@ Todos los días todo el día eres tú</div>
                 </div>
             </div>
         </div>
-        <a href="https://spotify.com" target="_blank" class="spotify-link-button">
+        <!-- NUEVO LINK ACTUALIZADO DE LA PLAYLIST DE PAOPAO -->
+        <a href="https://open.spotify.com/playlist/5dfAJ9jPW6btHq2JGfM57Z?si=Hbd3p2iHRNOe1uJLz_Jv-w" target="_blank" class="spotify-link-button">
             🔊 Escuchar Playlist Completa en Spotify 🎧
         </a>
     </main>
@@ -199,9 +200,9 @@ Todos los días todo el día eres tú</div>
         function navigate(direction) { let newIndex = currentIndex + direction; if (newIndex >= 0 && newIndex < playlistData.length) { updateSongDisplay(newIndex, true); } }
         function startExperience() { document.getElementById('welcome-screen').classList.add('hidden'); initConfetti(); updateSongDisplay(0, true); }
 
-        // --- INTERACTIVIDAD SEGURO DEL ROMPECABEZAS ---
+        // --- SISTEMA DEL ROMPECABEZAS EVITANDO CORCHETES EN BLANCO ---
         const puzzleContainer = document.getElementById('puzzle-container');
-        let currentOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        let currentOrder = Array.from(Array(9).keys()); // Genera la matriz del 0 al 8 automáticamente de forma segura
         let showNumbersState = false; let gameActive = true; let timeLeft = 60; let timerInterval;
 
         function shufflePuzzle() {
@@ -262,7 +263,7 @@ Todos los días todo el día eres tú</div>
         function showGuide(visible) { document.getElementById('puzzle-guide').style.display = visible ? 'block' : 'none'; }
 
         function handleWin(didWin) {
-            gameActive = false; currentOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8]; renderPuzzle();
+            gameActive = false; currentOrder = Array.from(Array(9).keys()); renderPuzzle();
             const emptyPiece = document.querySelector('.puzzle-piece.empty');
             if (emptyPiece) { emptyPiece.style.backgroundImage = "url('puzzle.png')"; emptyPiece.style.backgroundPosition = "-200px -200px"; emptyPiece.classList.remove('empty'); }
             document.getElementById('puzzle-helpers-div').style.display = 'none';
@@ -297,5 +298,3 @@ Todos los días todo el día eres tú</div>
         }
         updateSongDisplay(0, false);
     </script>
-</body>
-</html>
