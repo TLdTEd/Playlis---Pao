@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>22 ✨</title>
-    <!-- Contador de visitas invisible (No altera el diseño) -->
+    <!-- Contador de visitas invisible -->
     <img src="https://counter.dev" alt="" style="display:none; visibility:hidden; width:0; height:0; position:absolute;">
     
     <!-- Tipografías Estilo Garabato de Google Fonts -->
@@ -14,10 +14,10 @@
     
     <style>
         :root {
-            --bg-cream: #FDFBF7; /* Fondo papel de ilustración */
-            --accent-woodstock: #FFDE4D; /* Amarillo Woodstock suave */
-            --accent-snoopy: #FF6B6B; /* Rojo tierno */
-            --accent-spotify: #1DB954; /* Verde oficial de Spotify */
+            --bg-cream: #FDFBF7; 
+            --accent-woodstock: #FFDE4D; 
+            --accent-snoopy: #FF6B6B; 
+            --accent-spotify: #1DB954; 
             --text-dark: #1A1A1A;
             --box-bg: #FFFFFF;
             --hand-border: 3px solid #1A1A1A;
@@ -76,7 +76,6 @@
             padding: 24px; box-shadow: var(--doodle-shadow); display: flex; flex-direction: column; gap: 15px;
         }
 
-        /* CONTENEDOR CUADRADO PERFECTO 1:1 */
         .photo-container { 
             width: 100%; 
             aspect-ratio: 1 / 1; 
@@ -100,7 +99,6 @@
         .btn-nav { flex: 1; font-family: 'Fredoka', sans-serif; background: var(--box-bg); color: var(--text-dark); border: var(--hand-border); padding: 10px; font-size: 14px; font-weight: 600; border-radius: 12px; cursor: pointer; box-shadow: 3px 3px 0px #1A1A1A; transition: all 0.1s; }
         .btn-nav:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #1A1A1A; }
 
-        /* BOTÓN CON TU ENLACE ACTUALIZADO DEFINITIVO Y ATRIBUTO TARGET BLANK */
         .spotify-link-button {
             display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
             font-family: 'Fredoka', sans-serif; background-color: var(--accent-spotify); color: #FFFFFF;
@@ -117,7 +115,6 @@
 <body>
     <canvas id="confetti-canvas"></canvas>
     
-    <!-- PRESENTACIÓN POÉTICA -->
     <div id="welcome-screen">
         <div class="welcome-card">
             <div class="welcome-poem">Todos los días todo el día me puedo sentir bien
@@ -131,7 +128,6 @@ Todos los días todo el día eres tú</div>
         </div>
     </div>
 
-    <!-- CONTENIDO WEB -->
     <main id="main-content">
         <div class="player-card">
             <div class="photo-container"><img id="song-img" src="" alt="Momento"></div>
@@ -148,18 +144,20 @@ Todos los días todo el día eres tú</div>
             </div>
         </div>
 
-        <!-- ENLACE DE TU PLAYLIST DEFINITIVO SIN JAVASCRIPT QUE FALLE -->
-        <a href="https://open.spotify.com/playlist/5dfAJ9jPW6btHq2JGfM57Z?si=3FWQyTOzRJ-zkgxbBlYl-g" target="_blank" class="spotify-link-button">
+        <a href="https://spotify.com" target="_blank" class="spotify-link-button">
             🔊 Escuchar Playlist Completa en Spotify 🎧
         </a>
     </main>
 
-    <!-- Importación de tu archivo externo de canciones -->
     <script src="playlist.js"></script>
      <script>
         let currentIndex = 0;
         const selectElement = document.getElementById('song-select');
         
+        // Elemento de audio global e invisible para controlar la música
+        const currentAudio = new Audio();
+        currentAudio.loop = true; // Hace que el fragmento se repita en bucle si se queda ahí
+
         playlistData.forEach((song, idx) => {
             let option = document.createElement('option');
             option.value = idx;
@@ -167,30 +165,42 @@ Todos los días todo el día eres tú</div>
             selectElement.appendChild(option);
         });
 
-        function updateSongDisplay(index) {
+        function updateSongDisplay(index, playAudio = false) {
             currentIndex = index;
             const song = playlistData[index];
             document.getElementById('song-title').textContent = song.title;
             document.getElementById('song-lyrics').textContent = song.lyrics;
             document.getElementById('song-img').src = song.photo;
             document.getElementById('song-select').value = index;
+
+            // Manejo de la reproducción multimedia automatizada
+            if (playAudio) {
+                currentAudio.pause();
+                currentAudio.src = song.audio;
+                currentAudio.load();
+                currentAudio.play().catch(err => console.log("La reproducción automática requiere interacción previa."));
+            }
         }
 
-        function changeSong(index) { updateSongDisplay(parseInt(index)); }
+        function changeSong(index) { 
+            updateSongDisplay(parseInt(index), true); 
+        }
         
         function navigate(direction) {
             let newIndex = currentIndex + direction;
             if (newIndex >= 0 && newIndex < playlistData.length) {
-                updateSongDisplay(newIndex);
+                updateSongDisplay(newIndex, true);
             }
         }
 
         function startExperience() {
             document.getElementById('welcome-screen').classList.add('hidden');
             initConfetti();
+            // Despierta la música de la primera pista al dar clic en abrir
+            updateSongDisplay(0, true);
         }
 
-        // CONFETI ESTILO DOODLE (Colores Peanuts)
+        // CONFETI ESTILO DOODLE
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
         let confetti = [];
@@ -219,7 +229,8 @@ Todos los días todo el día eres tú</div>
             else ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        updateSongDisplay(0);
+        // Inicializa visualmente en la pista 0
+        updateSongDisplay(0, false);
     </script>
 </body>
 </html>
