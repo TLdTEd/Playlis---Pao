@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>22 ✨</title>
-    <!-- Contador de visitas invisible (No altera el diseño) -->
+    <!-- Contador de visitas invisible -->
     <img src="https://counter.dev" alt="" style="display:none; visibility:hidden; width:0; height:0; position:absolute;">
     
     <!-- Tipografías Estilo Garabato de Google Fonts -->
@@ -14,10 +14,10 @@
     
     <style>
         :root {
-            --bg-cream: #FDFBF7; /* Fondo papel de ilustración */
-            --accent-woodstock: #FFDE4D; /* Amarillo Woodstock suave */
-            --accent-snoopy: #FF6B6B; /* Rojo tierno */
-            --accent-spotify: #1DB954; /* Verde oficial de Spotify */
+            --bg-cream: #FDFBF7; 
+            --accent-woodstock: #FFDE4D; 
+            --accent-snoopy: #FF6B6B; 
+            --accent-spotify: #1DB954; 
             --text-dark: #1A1A1A;
             --box-bg: #FFFFFF;
             --hand-border: 3px solid #1A1A1A;
@@ -59,43 +59,35 @@
         .welcome-card::before { content: '✨'; position: absolute; top: 15px; left: 15px; font-size: 20px; }
         .welcome-card::after { content: '🐾'; position: absolute; bottom: 15px; right: 15px; font-size: 20px; }
 
-        .welcome-instructions {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--accent-snoopy);
-        }
+        .welcome-instructions { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--accent-snoopy); }
 
-        /* CONTENEDOR DEL PUZZLE (300x300 px) */
+        /* --- CONTENEDOR TEMPORIZADOR --- */
+        .timer-box { font-size: 14px; font-weight: 600; margin-bottom: 15px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .timer-bar-bg { width: 150px; height: 10px; border: 2px solid var(--text-dark); border-radius: 5px; background: #EEEEEE; overflow: hidden; }
+        .timer-bar-fill { width: 100%; height: 100%; background-color: var(--accent-snoopy); transition: width 1s linear; }
+
+        /* Botones Ayuda */
+        .puzzle-helpers { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .btn-help {
+            font-family: 'Fredoka', sans-serif; background-color: var(--bg-cream); border: 2px solid var(--text-dark);
+            padding: 6px 12px; font-size: 12px; font-weight: 600; border-radius: 8px; cursor: pointer;
+            box-shadow: 2px 2px 0px var(--text-dark); transition: all 0.1s;
+        }
+        .btn-help:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px var(--text-dark); }
+
+        #puzzle-guide { display: none; width: 120px; height: 120px; border: var(--hand-border); margin: 0 auto 15px auto; border-radius: 8px; overflow: hidden; box-shadow: var(--doodle-shadow); }
+        #puzzle-guide img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* PUZZLE GRID */
         #puzzle-container {
-            width: 304px;
-            height: 304px;
-            margin: 0 auto 20px auto;
-            border: var(--hand-border);
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            background-color: #FAF6F0;
-            gap: 1px;
+            width: 304px; height: 304px; margin: 0 auto 20px auto; border: var(--hand-border);
+            display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
+            background-color: #FAF6F0; gap: 1px; position: relative;
         }
 
-        .puzzle-piece {
-            width: 100px;
-            height: 100px;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            background-image: url('puzzle.png'); /* Busca tu foto cuadrada en la carpeta */
-            background-size: 300px 300px;
-            cursor: pointer;
-            user-select: none;
-            touch-action: none;
-        }
-
-        .puzzle-piece.empty {
-            background-image: none !important;
-            background-color: #FAF6F0;
-            border: none;
-            cursor: default;
-        }
+        .puzzle-piece { width: 100px; height: 100px; border: 1px solid rgba(0, 0, 0, 0.1); background-image: url('puzzle.png'); background-size: 300px 300px; cursor: pointer; user-select: none; touch-action: none; position: relative; }
+        .piece-number { position: absolute; top: 4px; left: 4px; background: rgba(255, 255, 255, 0.85); border: 1px solid #1A1A1A; color: #1A1A1A; font-size: 11px; font-weight: 600; padding: 1px 5px; border-radius: 4px; display: none; }
+        .puzzle-piece.empty { background-image: none !important; background-color: #FAF6F0; border: none; cursor: default; }
 
         .welcome-poem { font-family: 'Patrick Hand', cursive; font-size: 22px; line-height: 1.6; color: var(--text-dark); margin-bottom: 25px; white-space: pre-line; display: none; }
         .welcome-birthday { font-size: 20px; font-weight: 600; background-color: var(--accent-woodstock); padding: 6px 15px; border: var(--hand-border); border-radius: 12px; display: inline-block; margin-bottom: 20px; transform: rotate(-1deg); display: none; }
@@ -137,15 +129,27 @@
 <body>
     <canvas id="confetti-canvas"></canvas>
     
-    <!-- PRESENTACIÓN CON ROMPECABEZAS -->
     <div id="welcome-screen">
         <div class="welcome-card">
             <div id="puzzle-instruction" class="welcome-instructions">🧩 Ordena la foto para abrir tu regalo...</div>
             
-            <!-- Lienzo del Rompecabezas -->
+            <!-- CAJA TEMPORIZADOR -->
+            <div id="timer-box-div" class="timer-box">
+                <span>⏱️ Tiempo restante: <b id="timer-count">60</b>s</span>
+                <div class="timer-bar-bg">
+                    <div id="timer-bar" class="timer-bar-fill"></div>
+                </div>
+            </div>
+
+            <div id="puzzle-helpers-div" class="puzzle-helpers">
+                <button class="btn-help" onclick="toggleNumbers()">🔢 Números</button>
+                <button class="btn-help" onmousedown="showGuide(true)" onmouseup="showGuide(false)" ontouchstart="showGuide(true)" ontouchend="showGuide(false)">👁️ Ver Foto</button>
+            </div>
+
+            <div id="puzzle-guide"><img src="puzzle.png" alt="Guía"></div>
             <div id="puzzle-container"></div>
 
-            <!-- Contenido oculto que se revela al ganar -->
+            <!-- Contenido oculto que se libera al ganar o terminar tiempo -->
             <div class="welcome-poem" id="revealed-poem">Todos los días todo el día me puedo sentir bien
 Todos los días todo el día me puedo sentir terrible
 Todos los días todo el día te extraño
@@ -157,7 +161,7 @@ Todos los días todo el día eres tú</div>
         </div>
     </div>
 
-    <!-- CONTENIDO WEB -->
+    <!-- CONTENIDO PRINCIPAL -->
     <main id="main-content">
         <div class="player-card">
             <div class="photo-container"><img id="song-img" src="" alt="Momento"></div>
@@ -179,8 +183,11 @@ Todos los días todo el día eres tú</div>
         </a>
     </main>
 
+    <!-- Vinculación limpia con tus otros 2 archivos separados -->
     <script src="playlist.js"></script>
-     <script>
+    <script src="puzzle.js"></script>
+    
+    <script>
         let currentIndex = 0;
         const selectElement = document.getElementById('song-select');
         const currentAudio = new Audio();
@@ -208,77 +215,7 @@ Todos los días todo el día eres tú</div>
         function navigate(direction) { let newIndex = currentIndex + direction; if (newIndex >= 0 && newIndex < playlistData.length) { updateSongDisplay(newIndex, true); } }
         function startExperience() { document.getElementById('welcome-screen').classList.add('hidden'); initConfetti(); updateSongDisplay(0, true); }
 
-        // --- SISTEMA INTERACTIVO DEL PUZZLE DESLIZANTE CORREGIDO ---
-        const puzzleContainer = document.getElementById('puzzle-container');
-        let currentOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-
-        // Mezclar las piezas asegurando que el juego sea perfectamente resoluble
-        function shufflePuzzle() {
-            do {
-                for (let i = currentOrder.length - 2; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [currentOrder[i], currentOrder[j]] = [currentOrder[j], currentOrder[i]];
-                }
-            } while (checkWin());
-        }
-
-        function renderPuzzle() {
-            puzzleContainer.innerHTML = '';
-            currentOrder.forEach((pieceIdx, pos) => {
-                const piece = document.createElement('div');
-                if (pieceIdx === 8) {
-                    piece.className = 'puzzle-piece empty';
-                } else {
-                    piece.className = 'puzzle-piece';
-                    const row = Math.floor(pieceIdx / 3);
-                    const col = pieceIdx % 3;
-                    piece.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
-                    piece.addEventListener('click', () => movePiece(pos));
-                }
-                puzzleContainer.appendChild(piece);
-            });
-        }
-
-        function movePiece(pos) {
-            const emptyPos = currentOrder.indexOf(8);
-            
-            // Movimientos válidos permitidos para una cuadrícula de 3x3
-            const moves = {
-                0: [1, 3],    1: [0, 2, 4], 2: [1, 5],
-                3: [0, 4, 6], 4: [1, 3, 5, 7], 5: [2, 4, 8],
-                6: [3, 7],    7: [4, 6, 8], 8: [5, 7]
-            };
-
-            if (moves[pos].includes(emptyPos)) {
-                [currentOrder[pos], currentOrder[emptyPos]] = [currentOrder[emptyPos], currentOrder[pos]];
-                renderPuzzle();
-                if (checkWin()) handleWin();
-            }
-        }
-
-        function checkWin() {
-            return currentOrder.every((val, i) => val === i);
-        }
-
-        function handleWin() {
-            const emptyPiece = document.querySelector('.puzzle-piece.empty');
-            if (emptyPiece) {
-                emptyPiece.style.backgroundImage = "url('puzzle.png')";
-                emptyPiece.style.backgroundPosition = "-200px -200px";
-                emptyPiece.classList.remove('empty');
-            }
-            
-            document.getElementById('puzzle-instruction').textContent = "🎉 ¡Rompecabezas completado con éxito! ❤️";
-            document.getElementById('revealed-poem').style.display = 'block';
-            document.getElementById('revealed-birthday').style.display = 'inline-block';
-            document.getElementById('revealed-btn').style.display = 'block';
-        }
-
-        // Inicializar juego de rompecabezas
-        shufflePuzzle();
-        renderPuzzle();
-
-        // CONFETI ESTILO DOODLE
+        // CONFETI
         const canvas = document.getElementById('confetti-canvas'); const ctx = canvas.getContext('2d'); let confetti = [];
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeCanvas); resizeCanvas();
