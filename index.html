@@ -38,19 +38,20 @@
             padding: 10px;
         }
 
-        /* --- PRESENTACIÓN DE ENTRADA --- */
+        /* --- PANTALLA DE BIENVENIDA CON PUZZLE --- */
         #welcome-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: var(--bg-cream);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             z-index: 1000; transition: opacity 0.6s ease, visibility 0.6s; padding: 20px;
+            overflow-y: auto;
         }
 
         #welcome-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
         .welcome-card {
-            background: var(--box-bg); padding: 40px 25px; border: var(--hand-border);
+            background: var(--box-bg); padding: 30px 20px; border: var(--hand-border);
             border-radius: 20px; box-shadow: var(--doodle-shadow); max-width: 440px;
             width: 100%; text-align: center; position: relative;
         }
@@ -58,43 +59,63 @@
         .welcome-card::before { content: '✨'; position: absolute; top: 15px; left: 15px; font-size: 20px; }
         .welcome-card::after { content: '🐾'; position: absolute; bottom: 15px; right: 15px; font-size: 20px; }
 
-        .welcome-poem { font-family: 'Patrick Hand', cursive; font-size: 22px; line-height: 1.6; color: var(--text-dark); margin-bottom: 25px; white-space: pre-line; }
-        .welcome-birthday { font-size: 20px; font-weight: 600; background-color: var(--accent-woodstock); padding: 6px 15px; border: var(--hand-border); border-radius: 12px; display: inline-block; margin-bottom: 30px; transform: rotate(-1deg); }
+        .welcome-instructions {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--accent-snoopy);
+        }
+
+        /* CONTENEDOR DEL ROMPECABEZAS (300x300 px) */
+        #puzzle-container {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 20px auto;
+            border: var(--hand-border);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            background-color: #FAF6F0;
+            position: relative;
+        }
+
+        .puzzle-piece {
+            border: 1px solid #1A1A1A;
+            background-image: url('puzzle.png'); /* Tu foto de ella */
+            background-size: 300px 300px;
+            cursor: pointer;
+            user-select: none;
+            touch-action: none;
+            transition: all 0.15s ease;
+        }
+
+        .puzzle-piece.empty {
+            background-image: none !important;
+            background-color: #FAF6F0;
+            cursor: default;
+        }
+
+        .welcome-poem { font-family: 'Patrick Hand', cursive; font-size: 22px; line-height: 1.6; color: var(--text-dark); margin-bottom: 25px; white-space: pre-line; display: none; }
+        .welcome-birthday { font-size: 20px; font-weight: 600; background-color: var(--accent-woodstock); padding: 6px 15px; border: var(--hand-border); border-radius: 12px; display: inline-block; margin-bottom: 20px; transform: rotate(-1deg); display: none; }
 
         .btn-open {
             font-family: 'Fredoka', sans-serif; background-color: var(--accent-snoopy); color: white;
             border: var(--hand-border); padding: 12px 32px; font-size: 15px; font-weight: 600;
             border-radius: 50px; cursor: pointer; box-shadow: 3px 3px 0px #1A1A1A; transition: all 0.1s; text-transform: uppercase;
+            display: none; margin: 0 auto;
         }
         .btn-open:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px #1A1A1A; }
 
         /* --- REPRODUCTOR PRINCIPAL --- */
         #main-content { max-width: 460px; width: 100%; padding: 10px; display: flex; flex-direction: column; gap: 20px; }
-        
-        .player-card {
-            background: var(--box-bg); border: var(--hand-border); border-radius: 24px;
-            padding: 24px; box-shadow: var(--doodle-shadow); display: flex; flex-direction: column; gap: 15px;
-        }
-
-        .photo-container { 
-            width: 100%; 
-            aspect-ratio: 1 / 1; 
-            border: var(--hand-border); 
-            border-radius: 16px; 
-            overflow: hidden; 
-            background-color: #FAF6F0; 
-        }
-        
+        .player-card { background: var(--box-bg); border: var(--hand-border); border-radius: 24px; padding: 24px; box-shadow: var(--doodle-shadow); display: flex; flex-direction: column; gap: 15px; }
+        .photo-container { width: 100%; aspect-ratio: 1 / 1; border: var(--hand-border); border-radius: 16px; overflow: hidden; background-color: #FAF6F0; }
         .photo-container img { width: 100%; height: 100%; object-fit: cover; }
-        
         .info-container { text-align: center; padding: 5px 0; }
         .song-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; display: inline-block; border-bottom: 2px dashed var(--text-dark); padding-bottom: 2px; }
-        
         .lyrics-box { font-family: 'Patrick Hand', cursive; font-size: 22px; line-height: 1.5; color: #333333; background: #FDFDFD; border: 2px dashed #CCCCCC; padding: 15px; border-radius: 12px; min-height: 110px; white-space: pre-line; }
-
         .controls-box { display: flex; flex-direction: column; gap: 12px; }
         .modern-select { width: 100%; font-family: 'Fredoka', sans-serif; background: var(--box-bg); color: var(--text-dark); border: var(--hand-border); padding: 10px 15px; border-radius: 12px; font-size: 14px; font-weight: 600; outline: none; cursor: pointer; text-align: center; }
-        
         .nav-buttons { display: flex; justify-content: space-between; gap: 12px; }
         .btn-nav { flex: 1; font-family: 'Fredoka', sans-serif; background: var(--box-bg); color: var(--text-dark); border: var(--hand-border); padding: 10px; font-size: 14px; font-weight: 600; border-radius: 12px; cursor: pointer; box-shadow: 3px 3px 0px #1A1A1A; transition: all 0.1s; }
         .btn-nav:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #1A1A1A; }
@@ -106,7 +127,6 @@
             border-radius: 16px; cursor: pointer; box-shadow: var(--doodle-shadow); text-decoration: none;
             transition: all 0.1s; text-align: center;
         }
-
         .spotify-link-button:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0px #1A1A1A; }
 
         #confetti-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
@@ -115,19 +135,27 @@
 <body>
     <canvas id="confetti-canvas"></canvas>
     
+    <!-- PRESENTACIÓN CON ROMPECABEZAS -->
     <div id="welcome-screen">
         <div class="welcome-card">
-            <div class="welcome-poem">Todos los días todo el día me puedo sentir bien
+            <div id="puzzle-instruction" class="welcome-instructions">🧩 Ordena la foto para abrir tu regalo...</div>
+            
+            <!-- Lienzo del Rompecabezas -->
+            <div id="puzzle-container"></div>
+
+            <!-- Contenido oculto que se revela al ganar -->
+            <div class="welcome-poem" id="revealed-poem">Todos los días todo el día me puedo sentir bien
 Todos los días todo el día me puedo sentir terrible
 Todos los días todo el día te extraño
 Todos los días todo el día eres tú</div>
-            <div class="welcome-birthday">Felices 22 años de vida 🐾</div>
+            <div class="welcome-birthday" id="revealed-birthday">Felices 22 años de vida 🐾</div>
             <div>
-                <button class="btn-open" onclick="startExperience()">Abrir Regalo ✨</button>
+                <button class="btn-open" id="revealed-btn" onclick="startExperience()">Entrar al Regalo ✨</button>
             </div>
         </div>
     </div>
 
+    <!-- CONTENIDO WEB -->
     <main id="main-content">
         <div class="player-card">
             <div class="photo-container"><img id="song-img" src="" alt="Momento"></div>
@@ -150,64 +178,110 @@ Todos los días todo el día eres tú</div>
     </main>
 
     <script src="playlist.js"></script>
-     <script>
+      <script>
         let currentIndex = 0;
         const selectElement = document.getElementById('song-select');
-        
-        // Elemento de audio global e invisible para controlar la música
         const currentAudio = new Audio();
-        currentAudio.loop = true; // Hace que el fragmento se repita en bucle si se queda ahí
+        currentAudio.loop = true;
 
         playlistData.forEach((song, idx) => {
             let option = document.createElement('option');
-            option.value = idx;
-            option.textContent = song.title;
-            selectElement.appendChild(option);
+            option.value = idx; option.textContent = song.title; selectElement.appendChild(option);
         });
 
         function updateSongDisplay(index, playAudio = false) {
-            currentIndex = index;
-            const song = playlistData[index];
+            currentIndex = index; const song = playlistData[index];
             document.getElementById('song-title').textContent = song.title;
             document.getElementById('song-lyrics').textContent = song.lyrics;
             document.getElementById('song-img').src = song.photo;
             document.getElementById('song-select').value = index;
 
-            // Manejo de la reproducción multimedia automatizada
             if (playAudio) {
-                currentAudio.pause();
-                currentAudio.src = song.audio;
-                currentAudio.load();
-                currentAudio.play().catch(err => console.log("La reproducción automática requiere interacción previa."));
+                currentAudio.pause(); currentAudio.src = song.audio; currentAudio.load();
+                currentAudio.play().catch(err => console.log("Audio en espera."));
             }
         }
 
-        function changeSong(index) { 
-            updateSongDisplay(parseInt(index), true); 
+        function changeSong(index) { updateSongDisplay(parseInt(index), true); }
+        function navigate(direction) { let newIndex = currentIndex + direction; if (newIndex >= 0 && newIndex < playlistData.length) { updateSongDisplay(newIndex, true); } }
+        function startExperience() { document.getElementById('welcome-screen').classList.add('hidden'); initConfetti(); updateSongDisplay(0, true); }
+
+        // --- SISTEMA INTERACTIVO DEL PUZZLE DESLIZANTE ---
+        const puzzleContainer = document.getElementById('puzzle-container');
+        let pieces =; // 8 es la pieza vacía
+        let currentOrder = [...pieces];
+
+        // Mezclar las piezas asegurando que el juego sea perfectamente resoluble
+        function shufflePuzzle() {
+            do {
+                for (let i = currentOrder.length - 2; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [currentOrder[i], currentOrder[j]] = [currentOrder[j], currentOrder[i]];
+                }
+            } while (checkWin()); // Re-mezclar si sale resuelto de casualidad
         }
-        
-        function navigate(direction) {
-            let newIndex = currentIndex + direction;
-            if (newIndex >= 0 && newIndex < playlistData.length) {
-                updateSongDisplay(newIndex, true);
+
+        function renderPuzzle() {
+            puzzleContainer.innerHTML = '';
+            currentOrder.forEach((pieceIdx, pos) => {
+                const piece = document.createElement('div');
+                if (pieceIdx === 8) {
+                    piece.className = 'puzzle-piece empty';
+                } else {
+                    piece.className = 'puzzle-piece';
+                    // Calcular las coordenadas de corte de la imagen 3x3 original
+                    const row = Math.floor(pieceIdx / 3);
+                    const col = pieceIdx % 3;
+                    piece.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+                    piece.addEventListener('click', () => movePiece(pos));
+                }
+                puzzleContainer.appendChild(piece);
+            });
+        }
+
+        function movePiece(pos) {
+            const emptyPos = currentOrder.indexOf(8);
+            const validMoves = {
+                0:, 1:, 2:,
+                3:, 4:, 5:,
+                6:, 7:, 8: [5, 7]
+            };
+
+            if (validMoves[pos].includes(emptyPos)) {
+                [currentOrder[pos], currentOrder[emptyPos]] = [currentOrder[emptyPos], currentOrder[pos]];
+                renderPuzzle();
+                if (checkWin()) handleWin();
             }
         }
 
-        function startExperience() {
-            document.getElementById('welcome-screen').classList.add('hidden');
-            initConfetti();
-            // Despierta la música de la primera pista al dar clic en abrir
-            updateSongDisplay(0, true);
+        function checkWin() {
+            return currentOrder.every((val, i) => val === i);
         }
+
+        function handleWin() {
+            // Revelar la pieza vacía completando la foto completa
+            const emptyPiece = document.querySelector('.puzzle-piece.empty');
+            if (emptyPiece) {
+                emptyPiece.style.backgroundImage = "url('puzzle.png')";
+                emptyPiece.style.backgroundPosition = "-200px -200px";
+                emptyPiece.classList.remove('empty');
+            }
+            
+            // Ocultar instrucción e intercambiar por los versos y el botón
+            document.getElementById('puzzle-instruction').textContent = "🎉 ¡Rompecabezas completado con éxito! ❤️";
+            document.getElementById('revealed-poem').style.display = 'block';
+            document.getElementById('revealed-birthday').style.display = 'inline-block';
+            document.getElementById('revealed-btn').style.display = 'block';
+        }
+
+        // Inicializar juego de rompecabezas
+        shufflePuzzle();
+        renderPuzzle();
 
         // CONFETI ESTILO DOODLE
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        let confetti = [];
-
+        const canvas = document.getElementById('confetti-canvas'); const ctx = canvas.getContext('2d'); let confetti = [];
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
         function initConfetti() {
             const colors = ['#FFDE4D', '#FF6B6B', '#1A1A1A', '#6FA8DC', '#FFFFFF'];
@@ -218,18 +292,15 @@ Todos los días todo el día eres tú</div>
         }
 
         function animateConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let active = false;
+            ctx.clearRect(0, 0, canvas.width, canvas.height); let active = false;
             confetti.forEach((p, index) => {
                 p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2; p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - index / 3) * 10;
                 if (p.y <= canvas.height) active = true;
                 ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color; ctx.moveTo(p.x + p.tilt + p.r / 2, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2); ctx.stroke();
             });
-            if (active) requestAnimationFrame(animateConfetti);
-            else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (active) requestAnimationFrame(animateConfetti); else ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        // Inicializa visualmente en la pista 0
         updateSongDisplay(0, false);
     </script>
 </body>
