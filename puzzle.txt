@@ -1,0 +1,132 @@
+let currentOrder =;
+let showNumbersState = false;
+let gameActive = true;
+let timeLeft = 60;
+let timerInterval;
+
+function shufflePuzzle() {
+    do {
+        for (let i = currentOrder.length - 2; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            let temp = currentOrder[i];
+            currentOrder[i] = currentOrder[j];
+            currentOrder[j] = temp;
+        }
+    } while (checkWin());
+}
+
+function renderPuzzle() {
+    const container = document.getElementById('puzzle-container');
+    if (!container) return;
+    container.innerHTML = '';
+    currentOrder.forEach((pieceIdx, pos) => {
+        const piece = document.createElement('div');
+        if (pieceIdx === 8) {
+            piece.className = 'puzzle-piece empty';
+        } else {
+            piece.className = 'puzzle-piece';
+            const row = Math.floor(pieceIdx / 3);
+            const col = pieceIdx % 3;
+            piece.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+            
+            const numTag = document.createElement('span');
+            numTag.className = 'piece-number';
+            numTag.textContent = pieceIdx + 1;
+            if (showNumbersState) numTag.style.display = 'block';
+            
+            piece.appendChild(numTag);
+            if (gameActive) piece.addEventListener('click', () => movePiece(pos));
+        }
+        container.appendChild(piece);
+    });
+}
+
+function movePiece(pos) {
+    if (!gameActive) return;
+    const emptyPos = currentOrder.indexOf(8);
+    const pRow = Math.floor(pos / 3), pCol = pos % 3;
+    const eRow = Math.floor(emptyPos / 3), eCol = emptyPos % 3;
+    if ((Math.abs(pRow - eRow) + Math.abs(pCol - eCol)) === 1) {
+        let temp = currentOrder[pos];
+        currentOrder[pos] = currentOrder[emptyPos];
+        currentOrder[emptyPos] = temp;
+        renderPuzzle();
+        if (checkWin()) {
+            clearInterval(timerInterval);
+            handleWin(true);
+        }
+    }
+}
+
+function checkWin() {
+    return currentOrder.every((val, i) => val === i);
+}
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        const countEl = document.getElementById('timer-count');
+        const barEl = document.getElementById('timer-bar');
+        if (countEl) countEl.textContent = timeLeft;
+        if (barEl) barEl.style.width = `${(timeLeft / 60) * 100}%`;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            handleWin(false);
+        }
+    }, 1000);
+}
+
+function toggleNumbers() {
+    showNumbersState = !showNumbersState;
+    document.querySelectorAll('.piece-number').forEach(tag => {
+        tag.style.display = showNumbersState ? 'block' : 'none';
+    });
+}
+
+function showGuide(visible) {
+    const guide = document.getElementById('puzzle-guide');
+    if (guide) guide.style.display = visible ? 'block' : 'none';
+}
+
+function handleWin(didWin) {
+    gameActive = false;
+    currentOrder =;
+    renderPuzzle();
+    
+    const emptyPiece = document.querySelector('.puzzle-piece.empty');
+    if (emptyPiece) {
+        emptyPiece.style.backgroundImage = "url('puzzle.png')";
+        emptyPiece.style.backgroundPosition = "-200px -200px";
+        emptyPiece.classList.remove('empty');
+    }
+
+    const helpers = document.getElementById('puzzle-helpers-div');
+    const timerBox = document.getElementById('timer-box-div');
+    const guide = document.getElementById('puzzle-guide');
+    const inst = document.getElementById('puzzle-instruction');
+    const btn = document.getElementById('revealed-btn');
+    
+    if (helpers) helpers.style.display = 'none';
+    if (timerBox) timerBox.style.display = 'none';
+    if (guide) guide.style.display = 'none';
+    
+    if (inst) {
+        inst.textContent = didWin ? "🎉 ¡Rompecabezas completado! ❤️" : "⏰ ¡Se acabó el tiempo! 🐾";
+    }
+    if (btn) {
+        btn.textContent = didWin ? "Entrar al Regalo ✨" : "Casi, continuar de todos modos 🐾";
+        btn.style.display = 'block';
+    }
+
+    const poem = document.getElementById('revealed-poem');
+    const bday = document.getElementById('revealed-birthday');
+    if (poem) poem.style.display = 'block';
+    if (bday) bday.style.display = 'inline-block';
+}
+
+// Arrancar al cargar el script
+shufflePuzzle();
+window.addEventListener('DOMContentLoaded', () => {
+    renderPuzzle();
+    startTimer();
+});
