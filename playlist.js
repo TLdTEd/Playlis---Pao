@@ -21,7 +21,7 @@ const playlistData = [
     },
     {
         title: "5. Quiéreme - Latin Mafia / Fred again..",
-        lyrics: "Puede que no sepa bailar\nY aún así me quedo por ti\nYo no me puedo acostar\nY aún así me acuesto en ti",
+        lyrics: "Puede que no sepa bailar\nY aún así me quedo por ti\nY yo no me puedo acostar\nY aún así me acuesto en ti",
         photo: "9motnh50hours.png"
     },
     {
@@ -54,7 +54,7 @@ const playlistData = [
         lyrics: "Cuéntame siquiera si pensaste en lo mismo de siempre\nCuéntame siquiera si soñaste con un campo verde\nQue solo quiero saber\nSi todas las cosas que te prometiste\nYa están por llegar o cuántas ya cumpliste\nY si es que quieres verme",
         photo: "Roy.png"
     },
-     {
+       {
         title: "12. Yo no soy celoso - Bad Bunny",
         lyrics: "Yo no soy celoso, ¿pero quién e' ese cabrón?\nDime quién e' ese cabrón\nTranquila, no soy psycho\nNo vo'a hacer un papelón, pero\nAuch, mi corazón",
         photo: "Veranosinti.png"
@@ -71,7 +71,7 @@ const playlistData = [
     },
     {
         title: "15. Chinita linda - Alvaro Diaz / Rawayana",
-        lyrics: "Dime a ver, chinita linda",
+        lyrics: "Dime a ver, chinita linda\nEse tancito tuyo hace que no me rinda",
         photo: "Felicilandia.png"
     },
     {
@@ -92,7 +92,7 @@ const playlistData = [
     {
         title: "19. 2:12AM - Rauw Alejandro / Latin Mafia",
         lyrics: "Te vuelvo a tener, amémosno'\nUn mundo perfecto, inventémoslo y ven\nVen y bésame la boca",
-        photo: "212am.png"
+        photo: "cosanuestra.png"
     },
     {
         title: "20. Patadas de ahogado - Latin Mafia / Humbe",
